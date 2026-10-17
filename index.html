@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PsikoHistori - Sejarah & Paradigma Psikologi Interaktif</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .perspective-1000 { perspective: 1000px; -webkit-perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('timeline')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-lg font-bold shadow-lg shadow-sky-500/30">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-300">PsikoHistori</span>
+                        <span class="text-xs px-2 py-0.5 ml-1 bg-sky-500/20 text-sky-300 rounded-full font-semibold border border-sky-400/30">Psikologi UMS</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <button onclick="switchTab('timeline')" id="nav-timeline" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-sky-400 bg-slate-800">
+                        <i class="fas fa-clock-rotate-left text-xs"></i>
+                        <span>Timeline Sejarah</span>
+                    </button>
+                    <button onclick="switchTab('paradigm')" id="nav-paradigm" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fas fa-sitemap text-xs"></i>
+                        <span>Paradigma & Aliran</span>
+                    </button>
+                    <button onclick="switchTab('flashcard')" id="nav-flashcard" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fas fa-layer-group text-xs"></i>
+                        <span>Flashcard (50)</span>
+                    </button>
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fas fa-list-check text-xs"></i>
+                        <span>Kuis Evaluasi (50)</span>
+                    </button>
+                    <button onclick="switchTab('lab')" id="nav-lab" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fas fa-flask text-xs"></i>
+                        <span>Lab Analisis Kasus</span>
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-800 focus:outline-none">
+                    <i id="mobile-menu-icon" class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('timeline'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-sky-400 bg-slate-900 flex items-center gap-3">
+                <i class="fas fa-clock-rotate-left w-5"></i> Timeline Sejarah
+            </button>
+            <button onclick="switchTab('paradigm'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700 flex items-center gap-3">
+                <i class="fas fa-sitemap w-5"></i> Paradigma & Aliran
+            </button>
+            <button onclick="switchTab('flashcard'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700 flex items-center gap-3">
+                <i class="fas fa-layer-group w-5"></i> Flashcard (50)
+            </button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700 flex items-center gap-3">
+                <i class="fas fa-list-check w-5"></i> Kuis Evaluasi (50)
+            </button>
+            <button onclick="switchTab('lab'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-700 flex items-center gap-3">
+                <i class="fas fa-flask w-5"></i> Lab Analisis Kasus
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: TIMELINE SEJARAH -->
+        <section id="tab-timeline" class="tab-content block">
+            <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-history text-sky-600"></i> Lini Masa Sejarah Psikologi (600 BCE – 2021 CE)
+                    </h1>
+                    <p class="text-slate-500 text-sm mt-1">
+                        Eksplorasi kronologis peristiwa penting dalam sejarah dan perkembangan paradigma ilmu psikologi.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <input type="text" id="timeline-search" oninput="filterTimeline()" placeholder="Cari peristiwa / tokoh..." class="px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-64">
+                    <select id="era-filter" onchange="filterTimeline()" class="px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white">
+                        <option value="all">Semua Era Sejarah</option>
+                        <option value="BCE">Filsafat Kuno & Yunani (BCE)</option>
+                        <option value="Awal-CE">Abad Pertengahan & Renaisans (0–1799 CE)</option>
+                        <option value="Modern">Eksperimen & Paradigma Modern (1800–1950 CE)</option>
+                        <option value="Kontemporer">Revolusi Kognitif & Era Digital (1951–2021 CE)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Timeline Cards Grid -->
+            <div id="timeline-container" class="space-y-4">
+                <!-- Dynamic Content Loaded via JavaScript -->
+            </div>
+        </section>
+
+        <!-- TAB 2: PARADIGMA & ALIRAN -->
+        <section id="tab-paradigm" class="tab-content hidden">
+            <div class="mb-6 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-sitemap text-sky-600"></i> Evolusi Paradigma & Aliran Psikologi
+                </h1>
+                <p class="text-slate-500 text-sm mt-1">
+                    Analisis pergeseran ontologi, epistemologi, dan kontribusi historis dari 10 aliran utama psikologi.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1 space-y-2" id="paradigm-list">
+                    <!-- Paradigm buttons filled by JS -->
+                </div>
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200" id="paradigm-detail">
+                    <!-- Dynamic detail text -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: FLASHCARD INTERAKTIF (50 KARTU) -->
+        <section id="tab-flashcard" class="tab-content hidden">
+            <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-layer-group text-sky-600"></i> Kartu Memori Interaktif (50 Flashcards)
+                    </h1>
+                    <p class="text-slate-500 text-sm mt-1">
+                        Uji daya ingat dan pemahaman Anda mengenai tokoh, istilah, dan eksperimen kunci psikologi.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold">
+                        <span class="text-emerald-600 flex items-center gap-1"><i class="fas fa-check-circle"></i> Paham: <strong id="paham-count">0</strong></span>
+                        <span class="text-slate-300">|</span>
+                        <span class="text-rose-600 flex items-center gap-1"><i class="fas fa-rotate-right"></i> Ulang: <strong id="ulang-count">0</strong></span>
+                    </div>
+                    <button onclick="resetFlashcards()" class="px-3.5 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition flex items-center gap-1">
+                        <i class="fas fa-arrow-rotate-left"></i> Reset Status
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar & Status Header -->
+            <div class="max-w-2xl mx-auto mb-4">
+                <div class="flex justify-between items-center text-xs font-semibold text-slate-500 mb-1.5">
+                    <span id="flashcard-counter" class="font-bold text-slate-700">Kartu 1 / 50</span>
+                    <span id="card-status-tag" class="px-2.5 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                        <i class="fas fa-minus mr-1"></i> Belum Dipelajari
+                    </span>
+                </div>
+                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div id="flashcard-progress-bar" class="bg-sky-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Flashcard 3D Box -->
+            <div class="max-w-2xl mx-auto">
+                <div class="perspective-1000 h-80 cursor-pointer select-none" onclick="flipCard()">
+                    <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 shadow-xl rounded-2xl border border-slate-200">
+                        
+                        <!-- Front Side -->
+                        <div class="absolute w-full h-full backface-hidden bg-white p-8 rounded-2xl flex flex-col justify-between border-2 border-sky-100 shadow-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800" id="card-category">Kategori</span>
+                                <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fas fa-rotate"></i> Klik / Spasi untuk balik</span>
+                            </div>
+                            <div class="text-center my-auto px-4">
+                                <h2 class="text-2xl font-extrabold text-slate-800 leading-snug" id="card-front">Pertanyaan / Istilah</h2>
+                            </div>
+                            <div class="text-xs text-center text-slate-400 font-medium">PsikoHistori Pro Study Pack</div>
+                        </div>
+
+                        <!-- Back Side -->
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-900 text-white p-8 rounded-2xl flex flex-col justify-between border-2 border-slate-800 shadow-sm">
+                            <div class="flex justify-between items-center">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">Penjelasan Lengkap</span>
+                                <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fas fa-rotate"></i> Klik untuk balik</span>
+                            </div>
+                            <div class="my-auto overflow-y-auto max-h-44 custom-scrollbar px-2 py-1" onclick="event.stopPropagation()">
+                                <p class="text-slate-200 text-base leading-relaxed font-normal" id="card-back">Jawaban / Penjelasan detail.</p>
+                            </div>
+                            <div class="text-xs text-slate-400 text-center font-medium border-t border-slate-800 pt-2" id="card-subtext">Pengaruh Historis</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex flex-wrap justify-between items-center gap-3 mt-6">
+                    <button onclick="prevCard()" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-semibold rounded-xl shadow-sm transition flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="markCard(false)" class="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-sm font-semibold rounded-xl border border-rose-200 transition flex items-center gap-1.5">
+                            <i class="fas fa-xmark"></i> Perlu Ulang
+                        </button>
+                        <button onclick="markCard(true)" class="px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-xl border border-emerald-200 transition flex items-center gap-1.5">
+                            <i class="fas fa-check"></i> Paham
+                        </button>
+                    </div>
+                    <button onclick="nextCard()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold rounded-xl shadow-sm transition flex items-center gap-2">
+                        Selanjutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="text-center mt-3 text-xs text-slate-400">
+                    <p><i class="fas fa-keyboard mr-1"></i> Navigasi Keyboard: Panah Kiri (Sebelumnya), Panah Kanan (Selanjutnya), Spasi (Balik Kartu)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: KUIS EVALUASI (50 SOAL) -->
+        <section id="tab-quiz" class="tab-content hidden">
+            <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fas fa-list-check text-sky-600"></i> Kuis Evaluasi Konseptual (50 Soal)
+                    </h1>
+                    <p class="text-slate-500 text-sm mt-1">
+                        Uji penguasaan Anda mengenai sejarah, paradigma, dan analisis kasus psikologi.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-semibold text-slate-700" id="quiz-score-display">Skor: 0 / 50</span>
+                    <button onclick="resetQuiz()" class="px-3.5 py-2 text-xs font-semibold bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-xl transition border border-sky-200">
+                        Mulai Ulang Kuis
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Box -->
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200" id="quiz-box">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs font-bold text-sky-700 bg-sky-100 px-3 py-1 rounded-full" id="quiz-number">Soal 1 dari 50</span>
+                    <span class="text-xs font-semibold text-slate-400" id="quiz-era-tag">Era Sejarah</span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-800 mb-6 leading-snug" id="quiz-question">Pertanyaan kuis akan ditampilkan di sini...</h3>
+
+                <div class="space-y-3 mb-6" id="quiz-options">
+                    <!-- Dynamic Answer Options -->
+                </div>
+
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm leading-relaxed mb-6"></div>
+
+                <div class="flex justify-end">
+                    <button id="quiz-next-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm rounded-xl transition">
+                        Soal Berikutnya <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Completion Summary Screen (Hidden by Default) -->
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl p-8 shadow-sm border border-slate-200 text-center hidden" id="quiz-completion-box">
+                <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Selamat! Kuis Selesai</h2>
+                <p class="text-slate-500 text-sm mb-6">Anda telah berhasil menjawab seluruh 50 soal evaluasi sejarah dan paradigma psikologi.</p>
+
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 mb-6 max-w-md mx-auto">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Skor Akhir Anda</div>
+                    <div class="text-5xl font-black text-sky-600 mb-1" id="final-score-val">0 / 50</div>
+                    <div class="text-sm font-semibold text-slate-600" id="final-percentage-val">(0%)</div>
+                </div>
+
+                <div class="max-w-md mx-auto text-left mb-6 space-y-2">
+                    <label for="cert-user-name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Nama Lengkap untuk Sertifikat:</label>
+                    <input type="text" id="cert-user-name" placeholder="Masukkan nama lengkap Anda..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm font-semibold">
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="openCertificateModal()" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-certificate text-lg"></i>
+                        <span>Lihat & Unduh Sertifikat</span>
+                    </button>
+                    <button onclick="resetQuiz()" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fas fa-rotate-left"></i>
+                        <span>Ulangi Kuis</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: LAB ANALISIS KASUS -->
+        <section id="tab-lab" class="tab-content hidden">
+            <div class="mb-6 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fas fa-flask text-sky-600"></i> Lab Analisis Kasus Multiparadigma
+                </h1>
+                <p class="text-slate-500 text-sm mt-1">
+                    Pilih skenario kasus nyata dan bandingkan bagaimana berbagai paradigma klasik maupun kontemporer menjelaskan fenomena perilaku yang sama.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1 space-y-3">
+                    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Pilih Skenario Kasus</h2>
+                    <div class="space-y-2" id="case-selector-list">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200" id="case-display">
+                    <!-- Case details filled by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 mt-12 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 PsikoHistori.</p>
+            <p class="mt-1 text-slate-500">With Love, Wanda & Gemini.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Detailed Event Info -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <span class="text-xs font-extrabold px-3 py-1 bg-sky-100 text-sky-800 rounded-full" id="modal-year">Tahun</span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-2" id="modal-title">Judul Peristiwa</h2>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-1 text-xs uppercase tracking-wider">Deskripsi Sejarah</h4>
+                    <p id="modal-desc">Deskripsi lengkap peristiwa sejarah...</p>
+                </div>
+                <div class="p-4 bg-sky-50/50 rounded-xl border border-sky-100">
+                    <h4 class="font-bold text-sky-900 mb-1 text-xs uppercase tracking-wider">Pengaruh & Kontribusi terhadap Psikologi Modern</h4>
+                    <p id="modal-impact" class="text-sky-800">Dampak besar terhadap epistemologi dan aliran berikutnya...</p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm rounded-xl">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Certificate Preview & Download -->
+    <div id="cert-modal-backdrop" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 my-8">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-award text-amber-500 text-2xl"></i>
+                    <h2 class="text-xl font-bold text-slate-900">Sertifikat Kelulusan Resmi</h2>
+                </div>
+                <button onclick="closeCertificateModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="overflow-x-auto p-2 bg-slate-100 rounded-xl border border-slate-200 flex justify-center">
+                <canvas id="certificate-canvas" class="max-w-full h-auto rounded-lg shadow-md border border-slate-300"></canvas>
+            </div>
+
+            <div class="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <span class="text-xs text-slate-500"><i class="fas fa-info-circle mr-1"></i> Sertifikat dibuat secara instan dan dapat diunduh sebagai gambar PNG resolusi tinggi.</span>
+                <div class="flex gap-3">
+                    <button onclick="closeCertificateModal()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-sm rounded-xl transition">
+                        Tutup
+                    </button>
+                    <button onclick="downloadCertificatePNG()" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center gap-2">
+                        <i class="fas fa-download"></i>
+                        <span>Unduh Sertifikat (PNG)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Full Timeline Data Source
+        const timelineData = [
+            // BCE ERA
+            { id: 1, year: "600–469 BCE", title: "Kosmolog Pre-Sokratik (Thales, Anaximenes, Anaximander)", category: "BCE", desc: "Tiga filsuf Milesian pertama dalam sejarah tertulis yang memberikan jawaban rasional mengenai alam semesta. Menjadi fondasi filsafat Barat (epistemologi dan metafisika) serta awal mula posisi monisme, pluralisme, dualisme, materialisme, dan rasionalisme.", impact: "Meletakkan dasar pemikiran sains bahwa alam semesta dan aspek manusia dapat dipahami melalui hukum ilmiah rasional." },
+            { id: 2, year: "510 BCE", title: "Alcmaeon dari Croton", category: "BCE", desc: "Pengamatan tercatat pertama dalam sejarah bahwa otak terlibat langsung dalam proses sensorik. Persepsi dimediasi oleh 'pneuma' (nafas kehidupan) di dalam tubuh.", impact: "Spesifikasi biologis paling awal yang menempatkan fungsi persepsi sensorik manusia pada organ otak." },
+            { id: 3, year: "490–430 BCE", title: "Empedocles", category: "BCE", desc: "Pencetus konsep bahwa seluruh materi di alam semesta terdiri dari empat elemen dasar: api, air, tanah, dan udara (yang digerakkan oleh cinta dan perselisihan).", impact: "Mengilhami teori elemen dasar fisik yang menjadi dasar teori humor/cairan tubuh Hippocrates." },
+            { id: 4, year: "460–377 BCE", title: "Hippocrates dan Teori 4 Cairan Tubuh", category: "BCE", desc: "Mengaitkan empat cairan tubuh (darah, empedu kuning, empedu hitam, dahak) dengan kualitas sensorik empat elemen dasar. Penyakit fisik maupun mental dianggap sebagai akibat ketidakseimbangan cairan tubuh.", impact: "Menjadi landasan awal tipologi kepribadian biologis dan pendekatan medis non-mistis terhadap gangguan jiwa." },
+            { id: 5, year: "470–399 BCE", title: "Socrates", category: "BCE", desc: "Demarkasi penting filsafat Yunani Kuno. Mengalihkan fokus filsafat dari alam fisik ke eksistensi manusia, etika, kebajikan, dan introspeksi kritis.", impact: "Memperkenalkan metode introspeksi dan dialektika kritis dalam menganalisis kesadaran dan moralitas manusia." },
+            { id: 6, year: "428–347 BCE", title: "Plato dan Theory of Forms", category: "BCE", desc: "Merumuskan Theory of Forms yang mendasari idealisme, rasionalisme, dan dualisme. Mengatribusikan sifat mental pada jiwa (psyche) dan menempatkannya di otak.", impact: "Mengokohkan tradisi rasionalisme bahwa pengetahuan sejati diperoleh melalui penalaran bawaan jiwa." },
+            { id: 7, year: "384–322 BCE", title: "Aristoteles dan Pendirian Lyceum", category: "BCE", desc: "Penyelidikannya terhadap dunia fisik membentuk dasar empirisme. Mendirikan Lyceum (335 BCE) untuk riset empiris. Dianggap sebagai pendiri ilmu psikologi karena perlakuan pertamanya terhadap jiwa sebagai objek kajian terpisah dari masalah manusia lainnya.", impact: "Secara resmi memisahkan analisis studi jiwa (psyche) menjadi disiplin riset ilmiah berlandaskan observasi." },
+            { id: 8, year: "350 BCE", title: "Aristoteles Menerbitkan 'De Anima'", category: "BCE", desc: "Traktat ilmiah 'De Anima' (On the Soul) yang mendefinisikan hakikat serta aktivitas biologis dan psikologis dari jiwa/psyche.", impact: "Teks sistematis pertama dalam sejarah yang membahas memori, persepsi, emosi, dan fungsi mental manusia." },
+            { id: 9, year: "323–31 BCE", title: "Filsafat Romawi (Skeptisisme, Epikureanisme, Stoisisme)", category: "BCE", desc: "Filsafat yang berfokus pada kebahagiaan, pengendalian diri (Stoisisme), kenikmatan rasional (Epikureanisme), dan perilaku manusia di dunia saat ini daripada alam gaib.", impact: "Memengaruhi teori kepribadian, regulasi emosi, dan terapi perilaku-kognitif modern." },
+
+            // CE ERA: Early & Medieval
+            { id: 10, year: "129–199 CE", title: "Galen dan Humor Teori Temperamen & Pneuma", category: "Awal-CE", desc: "Galen mengembangkan tipologi kepribadian pertama berdasarkan modifikasi empat cairan tubuh dan menyempurnakan Doktrin Pneuma (animal spirits).", impact: "Model tipologi kepribadian dan fisiologi saraf pertama yang mendominasi kedokteran klasik hingga akhir 1700-an." },
+            { id: 11, year: "800–1500 CE", title: "Zaman Keemasan Islam (Islamic Golden Age)", category: "Awal-CE", desc: "Cendekiawan di Baghdad, Istanbul, dan Cordoba (seperti Rhazes, Avicenna, Alhazen, Averroes) menerjemahkan karya Yunani serta memberikan penemuan orisinal dalam persepsi visual, neuroanatomi, dan psikofisika.", impact: "Menjaga serta mengembangkan sains eksperimental persepsi dan kesehatan jiwa selama Abad Pertengahan." },
+            { id: 12, year: "1225–1274 CE", title: "Thomas Aquinas dan Skolastisisme", category: "Awal-CE", desc: "Filsuf Skolastik yang menyelaraskan ajaran iman agama dengan rasionalisme filsafat Yunani Kuno (Aristoteles).", impact: "Membuka ruang penggunaan logika rasional dan sains dalam memahami hakikat jiwa manusia di Eropa." },
+            { id: 13, year: "1450–1524 CE", title: "Penggunaan Pertama Istilah 'Psychology'", category: "Awal-CE", desc: "Humanis Kroasia Marko Marulić tercatat sebagai orang pertama yang menggunakan istilah 'psychology' dalam karyanya 'Psichiologia de ratione animae humanae'.", impact: "Pencetus istilah formal 'Psikologi' untuk menamai sains tentang kehidupan mental manusia." },
+            { id: 14, year: "1543 CE", title: "Awal Revolusi Ilmiah (Copernicus & Vesalius)", category: "Awal-CE", desc: "Publikasi karya Copernicus mengenai heliosentrisme dan Vesalius mengenai struktur anatomi tubuh manusia. Pengamatan empiris menggantikan otoritas mitologi dan dogma Abad Pertengahan.", impact: "Landasan utama terbentuknya tradisi observasi empiris ilmiah modern." },
+            { id: 15, year: "1620 CE", title: "Francis Bacon Menerbitkan 'Novum Organum'", category: "Awal-CE", desc: "Merekomendasikan metode penalaran induktif dan eksperimentasi ilmiah empiris sebagai landasan utama metode ilmiah.", impact: "Menjadi fondasi filosofis bagi metode penelitian eksperimental dalam psikologi." },
+            { id: 16, year: "1637 CE", title: "René Descartes Menerbitkan 'Discourse on the Method'", category: "Awal-CE", desc: "Merumuskan metode deduktif 'I think, therefore I am' serta masalah hubungan jiwa-raga (mind-body problem) dalam kerangka Dualisme dan Rasionalisme.", impact: "Mengilhami konsep respons refleks mekanistik tubuh serta perdebatan interaksi jiwa-raga." },
+            { id: 17, year: "1690 CE", title: "John Locke dan Concept 'Tabula Rasa'", category: "Awal-CE", desc: "Menerbitkan 'An Essay Concerning Human Understanding'. Pengetahuan manusia diperoleh sepenuhnya dari pengalaman sensorik (Empirisme).", impact: "Menjadi landasan utama aliran Empirisme, Asosiasionisme, dan Behaviorisme." },
+
+            // Modern Era
+            { id: 18, year: "1806 CE", title: "Philippe Pinel Menerbitkan 'A Treatise on Insanity'", category: "Modern", desc: "Menyediakan klasifikasi gangguan jiwa yang diperbaiki dan mengadvokasi terapi moral (moral talk therapy) bagi pasien penderita gangguan mental.", impact: "Awal pembaruan kemanusiaan dan fondasi psikoterapi dalam menangani gangguan jiwa." },
+            { id: 19, year: "1811 CE", title: "Hukum Bell-Magendie (Sir Charles Bell)", category: "Modern", desc: "Menemukan perbedaan fungsional spesifik antara saraf sensorik (posterior) dan saraf motorik (anterior) pada medula spinalis.", impact: "Membuktikan struktur fisiologis khusus yang membedakan proses sensasi dan aksi." },
+            { id: 20, year: "1834 CE", title: "Hukum Weber (Ernst Heinrich Weber)", category: "Modern", desc: "Menemukan bahwa ambang batas perbedaan stimulus yang dirasakan merupakan rasio konstan dari intensitas fisik awal.", impact: "Hukum kuantitatif matematis pertama yang menghubungkan besaran fisik dengan pengalaman mental." },
+            { id: 21, year: "1850 CE", title: "Hermann von Helmholtz Mengukur Kecepatan Impuls Saraf", category: "Modern", desc: "Ilmuwan pertama yang mengukur secara presisi kecepatan transmisi impuls saraf pada hewan.", impact: "Membuktikan bahwa reaksi fisik-mental memakan waktu terukur dan tidak bersifat instan gaib." },
+            { id: 22, year: "1860 CE", title: "Fechner Day & 'The Elements of Psychophysics'", category: "Modern", desc: "Gustav Fechner merumuskan Hukum Weber-Fechner dan menerbitkan buku psikofisika. Menunjukkan cara mengukur besaran sensasi subjektif secara tak langsung.", impact: "Meletakkan metode eksperimen psikofisika yang mengawali psikologi eksperimental." },
+            { id: 23, year: "1861 CE", title: "Paul Broca Menemukan Broca's Area", category: "Modern", desc: "Membuktikan bahwa kehilangan kemampuan bicara (afasia) berhubungan dengan kerusakan spesifik pada lobus frontalis kiri otak.", impact: "Bukti konkret lokalisasi fungsi bahasa pada korteks otak manusia." },
+            { id: 24, year: "1879 CE", title: "Wilhelm Wundt Mendirikan Laboratorium Pertama di Leipzig", category: "Modern", desc: "Wundt mendirikan laboratorium psikologi eksperimental pertama di Universitas Leipzig. Psikologi resmi berdiri sebagai disiplin ilmu mandiri. Menerbitkan jurnal 'Philosophical Studies' (1881).", impact: "Menjadi Bapa Psikologi Eksperimental dan memisahkan psikologi dari filsafat murni." },
+            { id: 25, year: "1890 CE", title: "William James Menerbitkan 'Principles of Psychology'", category: "Modern", desc: "Buku teks monumental yang memetakan kajian kesadaran dan fungsi adaptif mental, menjadi fondasi Fungsionalisme Amerika.", impact: "Mendorong penerapan psikologi pada ranah praktis seperti pendidikan dan penyesuaian diri." },
+            { id: 26, year: "1892 CE", title: "Pendirian American Psychological Association (APA)", category: "Modern", desc: "G. Stanley Hall memprakarsai pendirian APA sebagai organisasi profesi psikologi terdepan.", impact: "Mewadahi standarisasi riset, etika, dan keahlian profesi psikologi global." },
+            { id: 27, year: "1894 CE", title: "Gelar PhD Pertama Wanita dalam Psikologi", category: "Modern", desc: "Margaret Floy Washburn menjadi wanita pertama yang dianugerahi gelar PhD dalam psikologi di Cornell University. Mary Whiton Calkins memenuhi syarat PhD Harvard namun ditolak karena gender.", impact: "Langkah bersejarah pembuka kesetaraan gender dalam akademik psikologi." },
+            { id: 28, year: "1895 CE", title: "Sigmund Freud & Josef Breuer Menerbitkan 'Studies on Hysteria'", category: "Modern", desc: "Penggunaan metode katarsis yang mendorong Freud merumuskan teori ketidaksadaran dan Psikoanalisis.", impact: "Awal lahirnya modalitas psikoterapi Psikoanalisis dan dinamika ketidaksadaran." },
+            { id: 29, year: "1905 CE", title: "Tes Inteligensi Pertama (Binet-Simon)", category: "Modern", desc: "Alfred Binet dan Theodore Simon menciptakan tes inteligensi praktis pertama untuk mengukur kemampuan mental anak.", impact: "Mengawali gerakan pengujian mental dan psikometri di seluruh dunia." },
+            { id: 30, year: "1912 CE", title: "Fenomena Phi & Psikologi Gestalt", category: "Modern", desc: "Max Wertheimer menerbitkan studi gerakan ilusi (Phi phenomenon), mendasari lahirnya aliran Psikologi Gestalt.", impact: "Mengubah paradigma persepsi: 'keseluruhan berbeda dari sekadar penjumlahan bagian-bagiannya'." },
+            { id: 31, year: "1913 CE", title: "John B. Watson dan Manifesto Behaviorisme", category: "Modern", desc: "Watson menulis 'Psychology as the Behaviorist Views It', menolak studi kesadaran dan mewajibkan perilaku teramati sebagai objek tunggal psikologi.", impact: "Dominasi paradigma Behaviorisme dalam eksperimen laboratorium objektif." },
+            { id: 32, year: "1920 CE", title: "PhD Pertama Afrika-Amerika & Pengondisian Rasa Takut", category: "Modern", desc: "Francis Cecil Sumner menjadi pria Afrika-Amerika pertama yang meraih PhD Psikologi. Watson & Rayner membuktikan ketakutan adalah respons terondisikan (Little Albert).", impact: "Mendorong kesetaraan ras dalam psikologi serta riset terapi perilaku." },
+            { id: 33, year: "1927 CE", title: "Ivan Pavlov Menerbitkan 'Conditioned Reflexes'", category: "Modern", desc: "Pavlov menerbitkan riset fisiologi pencernaan anjing yang menjadi fondasi utama Pengondisian Klasik (Classical Conditioning).", impact: "Landasan utama teori belajar asosiatif dalam Behaviorisme." },
+            { id: 34, year: "1938 CE", title: "B.F. Skinner Menerbitkan 'The Behavior of Organisms'", category: "Modern", desc: "Skinner merumuskan pengondisian operan (Operant Conditioning) dan analisis perilaku eksperimental.", impact: "Pengaplikasian modifikasi perilaku pada ranah terapi, pendidikan, dan pelatihan." },
+            { id: 35, year: "1942–1943 CE", title: "Lahirnya Psikologi Humanistik (Rogers & Maslow)", category: "Modern", desc: "Carl Rogers menerbitkan 'Counseling and Psychotherapy' (1942) dan Abraham Maslow merumuskan 'A Theory of Human Motivation' (1943).", impact: "Menjadi 'Kekuatan Ketiga' psikologi yang menekankan kehendak bebas, potensi, dan aktualisasi diri." },
+
+            // Contemporary Era
+            { id: 36, year: "1949 CE", title: "Model Boulder (Research-Practitioner)", category: "Kontemporer", desc: "Rekomendasi Konferensi Boulder agar program doktoral melatih psikolog klinis sebagai peneliti sekaligus praktisi medis.", impact: "Standar emas pendidikan dan sains psikologi klinis modern." },
+            { id: 37, year: "1952 CE", title: "Edisi Pertama DSM (DSM-1) Diterbitkan", category: "Kontemporer", desc: "American Psychiatric Association menerbitkan edisi pertama Diagnostic and Statistical Manual of Mental Disorders.", impact: "Standarisasi klasifikasi kriteria diagnosis gangguan jiwa secara internasional." },
+            { id: 38, year: "1954 CE", title: "Studi Prasangka Gordon Allport & Brown v. Board", category: "Kontemporer", desc: "Allport menerbitkan 'The Nature of Prejudice'. Mahkamah Agung US menggunakan riset psikologi (Kenneth & Mamie Clark) untuk membatalkan segregasi rasial sekolah.", impact: "Penerapan analisis psikologi sosial untuk memperjuangkan keadilan hak sipil." },
+            { id: 39, year: "1959 CE", title: "Ulasan Kritis Noam Chomsky Terhadap Behaviorisme", category: "Kontemporer", desc: "Chomsky meruntuhkan penjelasan behavioristik Skinner tentang bahasa, membuktikan adanya struktur tata bahasa bawaan di otak.", impact: "Pemicu utama lahirnya Revolusi Kognitif." },
+            { id: 40, year: "1963 CE", title: "Pengembangan Terapi Kognitif (Aaron T. Beck)", category: "Kontemporer", desc: "Beck menerbitkan riset distorsi kognitif pada depresi, meletakkan fondasi Terapi Perilaku Kognitif (CBT).", impact: "Modalitas psikoterapi paling efektif dan berbasis bukti ilmiah hingga saat ini." },
+            { id: 41, year: "1967 CE", title: "Ulric Neisser Menerbitkan 'Cognitive Psychology'", category: "Kontemporer", desc: "Neisser mengukuhkan kajian pemrosesan informasi internal (memori, persepsi, penalaran) sebagai paradigma kognitif.", impact: "Menggeser dominasi Behaviorisme dan memantapkan Sains Kognitif Modern." },
+            { id: 42, year: "1968 CE", title: "Pendirian Association of Black Psychologists (ABPsi)", category: "Kontemporer", desc: "Didirikan untuk menyuarakan kebutuhan profesional psikolog dan masyarakat Afrika-Amerika yang terabaikan.", impact: "Mendorong kesetaraan rasial dan psikologi lintas budaya." },
+            { id: 43, year: "1973 CE", title: "Penghapusan Homoseksual dari DSM", category: "Kontemporer", desc: "APA secara resmi mencabut homoseksualitas dari daftar diagnosis gangguan mental dalam DSM.", impact: "Pergeseran paradigma ilmiah berbasis kesetaraan hak asasi dan keberagaman gender." },
+            { id: 44, year: "1975–1976 CE", title: "Lahirnya Psikologi Evolusioner (Wilson & Dawkins)", category: "Kontemporer", desc: "E.O. Wilson menerbitkan 'Sociobiology' dan Richard Dawkins menerbitkan 'The Selfish Gene'.", impact: "Menjelaskan mekanisme perilaku sosial dan adaptasi mental melalui seleksi alam evolusi." },
+            { id: 45, year: "1979 CE", title: "Riset Kesaksian Mata (Elizabeth Loftus)", category: "Kontemporer", desc: "Loftus menerbitkan 'Eyewitness Testimony', membuktikan kekeliruan memori dan pengaruh manipulasi informasi pada saksi.", impact: "Merevolusi praktik hukum, investigasi kepolisian, dan psikologi forensik." },
+            { id: 46, year: "1981 CE", title: "Hadiah Nobel untuk Otak Belah (Roger Sperry)", category: "Kontemporer", desc: "Roger Sperry dianugerahi Hadiah Nobel atas penemuan spesialisasi fungsi hemisfer otak kiri dan kanan.", impact: "Pijakan utama neurosains kognitif modern." },
+            { id: 47, year: "1991 CE", title: "Gerakan Psikologi Positif (Martin Seligman)", category: "Kontemporer", desc: "Seligman mengusung Psikologi Positif yang berfokus pada kebahagiaan, ketangguhan (resilience), dan kekuatan karakter.", impact: "Mengimbangi fokus psikologi dari sekadar mengobati patologi ke peningkatan kualitas hidup." },
+            { id: 48, year: "2002 CE", title: "Hadiah Nobel Ekonomi untuk Daniel Kahneman", category: "Kontemporer", desc: "Psikolog Daniel Kahneman meraih Nobel Ekonomi atas riset pengambilan keputusan dan bias kognitif (System 1 & System 2).", impact: "Melahirkan bidang Ekonomi Perilaku (Behavioral Economics)." },
+            { id: 49, year: "2013 CE", title: "Publikasi DSM-5", category: "Kontemporer", desc: "APA merilis DSM-5 dengan kriteria diagnosis berbasis gangguan fungsi dan dimensi kepribadian.", impact: "Pembaruan standar diagnosis psikiatri dan psikologi klinis abad ke-21." },
+            { id: 50, year: "2021 CE", title: "Permohonan Maaf Resmi APA atas Inekuitas Sistemis", category: "Kontemporer", desc: "APA secara resmi meminta maaf atas peran historis disiplin psikologi dalam berkontribusi pada rasisme dan ketimpangan sistemik.", impact: "Komitmen pembaruan psikologi global menuju kesetaraan, keberagaman, dan inklusivitas budaya." }
+        ];
+
+        // 10 Paradigms Data
+        const paradigmData = [
+            { id: 'voluntarism', name: 'Voluntarisme & Strukturalisme', figures: 'Wilhelm Wundt, Edward B. Titchener', focus: 'Struktur pengalaman mental sadar melalui elemen-elemen dasar sensasi dan persepsi menggunakan introspeksi eksperimental.', method: 'Introspeksi Eksperimental', impact: 'Memisahkan psikologi dari filsafat dan menjadikannya disiplin laboratorium kuantitatif.' },
+            { id: 'functionalism', name: 'Fungsionalisme', figures: 'William James, John Dewey, James Angell', focus: 'Fungsi kesadaran dan proses mental dalam membantu organisme beradaptasi dengan lingkungannya.', method: 'Observasi pragmatis, tes mental, dan komparatif', impact: 'Mendorong lahirnya psikologi terapan, psikologi pendidikan, dan pengujian inteligensi.' },
+            { id: 'psychoanalysis', name: 'Psikoanalisis', figures: 'Sigmund Freud, Carl Jung, Karen Horney', focus: 'Dinamika dorongan ketidaksadaran, konflik intrapsikis masa kecil, dan mekanisme pertahanan diri.', method: 'Asosiasi bebas, analisis mimpi, analisis transferensi', impact: 'Mengubah modalitas psikoterapi, psikopatologi, dan pemahaman kepribadian mendalam.' },
+            { id: 'behaviorism', name: 'Behaviorisme Klasik & Radikal', figures: 'John B. Watson, B.F. Skinner, Ivan Pavlov', focus: 'Hubungan Stimulus-Respon (S-R) dan pengondisian operan tanpa memperhitungkan proses mental internal.', method: 'Eksperimen laboratorium terkontrol ketat pada hewan dan manusia', impact: 'Mendominasi riset metodologis psikologi eksperimental dan terapi modifikasi perilaku.' },
+            { id: 'gestalt', name: 'Psikologi Gestalt', figures: 'Max Wertheimer, Wolfgang Köhler, Kurt Koffka', focus: 'Persepsi holistik ("keseluruhan lebih dari sekadar penjumlahan bagian-bagiannya") dan fenomena Phi.', method: 'Fenomenologi eksperimental dan studi pemecahan masalah (insight)', impact: 'Memberikan dasar kuat bagi psikologi persepsi, kognisi, dan dinamika kelompok.' },
+            { id: 'humanistic', name: 'Psikologi Humanistik', figures: 'Carl Rogers, Abraham Maslow', focus: 'Potensi manusia, aktualisasi diri, kehendak bebas (free will), dan pengalaman subjektif.', method: 'Terapi berpusat pada klien (Client-Centered Therapy) dan fenomenologi', impact: 'Disebut sebagai "Kekuatan Ketiga" dalam psikologi yang merevolusi konseling dan kepribadian.' },
+            { id: 'cognitive', name: 'Psikologi Kognitif', figures: 'Ulric Neisser, George Miller, Aaron Beck', focus: 'Proses pemrosesan informasi internal: memori, atensi, penalaran, dan bahasa.', method: 'Eksperimen kognitif, pemodelan komputer, dan studi memori', impact: 'Menggeser dominasi Behaviorisme dan melahirkan sains kognitif modern.' },
+            { id: 'biological', name: 'Neurosains & Psikologi Biologis', figures: 'Roger Sperry, Karl Lashley, Donald Hebb', focus: 'Dasar neurobiologis perilaku: struktur otak, neurotransmiter, dan hereditas genetik.', method: 'fMRI, EEG, stimulasi otak, dan neuropembedahan', impact: 'Menghubungkan psikologi dengan psikiatri biologis dan sains kedokteran.' },
+            { id: 'evolutionary', name: 'Psikologi Evolusioner', figures: 'E.O. Wilson, David Buss, Richard Dawkins', focus: 'Nilai adaptif dan mekanisme psikologis yang berkembang melalui seleksi alam evolusi.', method: 'Analisis komparatif lintas spesies dan pemodelan adaptasi evolusi', impact: 'Menjelaskan perilaku sosial, pemilihan pasangan, dan alturisme dari sudut pandang genetik.' },
+            { id: 'socio_cultural', name: 'Psikologi Sosio-Kultural', figures: 'Lev Vygotsky, Kenneth Clark, J.W. Berry', focus: 'Pengaruh norma sosial, budaya, ras, dan konteks sejarah terhadap perkembangan mental.', method: 'Studi cross-cultural, etnografi, dan pengukuran kesetaraan sosial', impact: 'Mendorong keberagaman, kesetaraan, dan penyesuaian alat tes psikologi di seluruh dunia.' }
+        ];
+
+        // Complete 50 Flashcard Dataset
+        const flashcards = [
+            { id: 1, cat: "Filsafat Kuno", front: "Siapakah tokoh yang dianggap mendirikan kajian psikologi sebagai objek ilmiah terpisah melalui karya 'De Anima'?", back: "Aristoteles (384–322 BCE). Ia mendirikan Lyceum dan menulis traktat 'De Anima' (On the Soul) yang membahas persepsi, memori, dan emosi secara empiris.", impact: "Awal pemisahan studi jiwa (psyche) dari filsafat spekulatif." },
+            { id: 2, cat: "Metodologi", front: "Apa itu metode Introspeksi Eksperimental yang digagas Wilhelm Wundt?", back: "Metode ilmiah di mana subjek yang terlatih mengamati dan melaporkan pengalaman sensorik atau kesadaran sadar mereka secara langsung di bawah kondisi laboratorium yang dikontrol ketat.", impact: "Metode pertama untuk memetakan elemen dasar kesadaran manusia." },
+            { id: 3, cat: "Behaviorisme", front: "Apa gagasan utama John B. Watson dalam manifesto 'Psychology as the Behaviorist Views It' (1913)?", back: "Watson menegaskan bahwa psikologi harus menjadi sains objektif yang hanya meneliti perilaku yang teramati (observable behavior) dan menolak konsep kesadaran serta introspeksi.", impact: "Mengawali era dominasi Behaviorisme dalam psikologi eksperimental." },
+            { id: 4, cat: "Kognitif", front: "Bagaimana Noam Chomsky memicu Revolusi Kognitif pada tahun 1959?", back: "Melalui ulasan kritis terhadap buku Skinner 'Verbal Behavior', Chomsky membuktikan bahwa pemerolehan bahasa anak membutuhkan kapasitas tata bahasa bawaan (Language Acquisition Device) dan tidak dapat dijelaskan sekadar dengan pengondisian S-R.", impact: "Meruntuhkan hegemonisme Behaviorisme dan membuka era Sains Kognitif." },
+            { id: 5, cat: "Psikoanalisis", front: "Bagaimana pembagian struktur kepribadian menurut Sigmund Freud?", back: "Id (prinsip kenikmatan tak sadar), Ego (prinsip realitas rasional penyeimbang), dan Superego (internalisasi nilai moral dan aturan sosial).", impact: "Landasan utama teori dinamika kepribadian psikoanalisis." },
+            { id: 6, cat: "Filsafat Kuno", front: "Apa kontribusi utama para filsuf Pre-Sokratik (Thales, Anaximenes, Anaximander) bagi psikologi?", back: "Mereka memberikan penjelasan rasional non-mistis pertama tentang alam semesta dan materi, menggantikan mitologi dengan logika dan pengamatan.", impact: "Awal lahirnya tradisi sains Barat, epistemologi, dan pandangan monisme-materialisme." },
+            { id: 7, cat: "Neurosains", front: "Siapakah Alcmaeon dari Croton dan apa penemuannya pada 510 BCE?", back: "Filsuf-dokter Yunani Kuno pertama yang mencatat bahwa otak (bukan jantung) adalah organ pusat persepsi sensorik dan pikiran manusia.", impact: "Spesifikasi biologis pertama yang menempatkan fungsi persepsi di otak." },
+            { id: 8, cat: "Filsafat Kuno", front: "Apa isi Teori 4 Cairan Tubuh (Humorism) dari Hippocrates?", back: "Kesehatan fisik dan jiwa ditentukan oleh keseimbangan 4 cairan: darah (sanguinis), empedu kuning (koleris), empedu hitam (melankolis), dan dahak (flegmatis).", impact: "Fondasi awal tipologi kepribadian biologis dan pendekatan medis non-mistis." },
+            { id: 9, cat: "Filsafat Kuno", front: "Bagaimana Metode Dialektika Socrates memengaruhi psikologi?", back: "Socrates menggunakan pertanyaan kritis berturut-turut untuk mendorong individu melakukan refleksi diri ('know thyself') dan menguji keyakinan moral mereka.", impact: "Cikal bakal teknik introspeksi kritis dan questioning dalam psikoterapi." },
+            { id: 10, cat: "Filsafat Kuno", front: "Apa pandangan Plato tentang sumber pengetahuan manusia (Rasionalisme)?", back: "Plato meyakini pengetahuan sejati tidak diperoleh dari indera yang menipu, melainkan melalui ingatan bawaan jiwa tentang 'Theory of Forms' melalui akal budi murni.", impact: "Landasan utama tradisi Rasionalisme dan Nativisme dalam psikologi." },
+            { id: 11, cat: "Filsafat Kuno", front: "Bagaimana ajaran Stoisisme berkontribusi pada terapi psikologi modern?", back: "Stoisisme menekankan bahwa penderitaan manusia bukan disebabkan oleh peristiwa itu sendiri, melainkan oleh persepsi/penilaian kita terhadap peristiwa tersebut.", impact: "Prinsip dasar yang mengilhami Terapi Perilaku Kognitif (CBT) dan REBT." },
+            { id: 12, cat: "Awal CE", front: "Apa kontribusi Galen (129–199 CE) terhadap teori kepribadian dan saraf?", back: "Galen mengembangkan tipologi temperamen kepribadian berdasarkan 4 cairan Hippocrates dan memperkenalkan doktrin pneuma (animal spirits) pada sistem saraf.", impact: "Model psikofisiologi dominan yang bertahan hingga akhir Abad Pertengahan." },
+            { id: 13, cat: "Awal CE", front: "Apa peran penting Alhazen (Ibn al-Haytham) dalam psikologi eksperimental persepsi?", back: "Alhazen membuktikan bahwa penglihatan terjadi karena cahaya memantul dari objek ke mata (bukan sinar keluar dari mata) dan melakukan eksperimen psikofisika visual.", impact: "Pelopor metode eksperimen ilmiah dalam optik dan persepsi sensori." },
+            { id: 14, cat: "Awal CE", front: "Siapakah tokoh yang pertama kali menggunakan istilah 'Psychology' dalam tulisan?", back: "Marko Marulić, seorang humanis Kroasia, dalam bukunya 'Psichiologia de ratione animae humanae' yang ditulis antara tahun 1450–1524.", impact: "Pencetus istilah formal 'Psikologi' dalam sejarah literatur ilmiah." },
+            { id: 15, cat: "Metodologi", front: "Apa kontribusi Francis Bacon dalam 'Novum Organum' (1620)?", back: "Ia merekomendasikan metode induktif empiris: mengumpulkan data rinci melalui pengamatan sistematis sebelum merumuskan kesimpulan atau hukum umum.", impact: "Landasan filosofis bagi penggunaan eksperimen terkontrol dalam psikologi." },
+            { id: 16, cat: "Filsafat Modern", front: "Apa pemikiran René Descartes mengenai 'Dualisme Interaksionis' (1637)?", back: "Descartes menyatakan raga (tubuh fisik) dan jiwa (pikiran tak berwujud) adalah dua substansi berbeda yang berinteraksi di kelenjar pineal otak.", impact: "Memicu perdebatan mind-body problem dan konsep refleks mekanistik." },
+            { id: 17, cat: "Empirisme", front: "Apa yang dimaksud dengan konsep 'Tabula Rasa' oleh John Locke (1690)?", back: "Pikiran manusia saat lahir bagaikan kertas kosong tanpa ide bawaan, dan seluruh pengetahuan terbentuk dari pengalaman sensorik serta refleksi.", impact: "Fondasi aliran Empirisme, Asosiasionisme, dan Behaviorisme." },
+            { id: 18, cat: "Psikologi Klinis", front: "Apa pembaruan penting yang dilakukan Philippe Pinel pada tahun 1806?", back: "Pinel membebaskan penderita gangguan jiwa dari rantai besi di rumah sakit jiwa Prancis dan mengadvokasi 'terapi moral' yang manusiawi.", impact: "Awal pendekatan medis-kemanusiaan dalam psikiatri dan psikologi klinis." },
+            { id: 19, cat: "Neurosains", front: "Apa bunyi Hukum Bell-Magendie (1811) dalam neurofisiologi?", back: "Penemuan bahwa akar dorsal (posterior) medula spinalis khusus membawa impuls sensorik, sedangkan akar ventral (anterior) khusus membawa impuls motorik.", impact: "Membuktikan pemisahan struktural anatomis antara sensasi dan respons aksi." },
+            { id: 20, cat: "Psikofisika", front: "Apa isi Hukum Weber (1834) tentang persepsi stimulus?", back: "Hukum Weber menyatakan bahwa ambang batas perbedaan stimulus yang dapat dirasakan (Just Noticeable Difference / JND) adalah rasio konstan dari intensitas stimulus awal.", impact: "Hukum matematis kuantitatif pertama dalam sejarah psikologi eksperimental." },
+            { id: 21, cat: "Neurosains", front: "Apa penemuan penting Hermann von Helmholtz pada tahun 1850?", back: "Helmholtz menjadi orang pertama yang berhasil mengukur kecepatan transmisi impuls saraf pada katak dan manusia (sekitar 27–90 m/detik).", impact: "Membuktikan bahwa proses mental-fisiologis memerlukan waktu fisik yang terukur." },
+            { id: 22, cat: "Psikofisika", front: "Mengapa Gustav Fechner dianggap sebagai Bapa Psikofisika (1860)?", back: "Fechner merumuskan Hukum Weber-Fechner (S = k log R) yang mengukur hubungan kuantitatif antara magnitudo fisik stimulus dan intensitas persepsi mental.", impact: "Menciptakan teknik pengukuran psikofisika eksperimental pertama." },
+            { id: 23, cat: "Neurosains", front: "Apa arti penting penemuan Broca's Area oleh Paul Broca (1861)?", back: "Broca membuktikan bahwa kerusakan pada area spesifik di lobus frontalis kiri otak menyebabkan kehilangan kemampuan bicara (afasia motorik).", impact: "Bukti empiris pertama tentang lokalisasi fungsi bahasa pada korteks otak." },
+            { id: 24, cat: "Sejarah Psikologi", front: "Mengapa tahun 1879 dianggap sebagai tahun lahirnya ilmu Psikologi?", back: "Karena Wilhelm Wundt mendirikan laboratorium psikologi eksperimental pertama di Universitas Leipzig, Jerman, memisahkan psikologi dari filsafat.", impact: "Menjadikan psikologi sebagai disiplin ilmu mandiri berbasis riset ilmiah." },
+            { id: 25, cat: "Fungsionalisme", front: "Bagaimana pandangan William James tentang kesadaran dalam 'Principles of Psychology' (1890)?", back: "James menolak pembagian kesadaran menjadi elemen kaku dan menggambarkannya sebagai 'Stream of Consciousness' (aliran kesadaran) yang berfungsi membantu adaptasi.", impact: "Fondasi lahirnya aliran Fungsionalisme di Amerika Serikat." },
+            { id: 26, cat: "Sejarah Organisasi", front: "Siapa pendiri American Psychological Association (APA) pada tahun 1892?", back: "G. Stanley Hall mendirikan APA di Clark University dan menjadi presiden pertamanya.", impact: "Wadah standarisasi profesionalisme, riset, dan etika psikologi secara global." },
+            { id: 27, cat: "Sejarah Tokoh", front: "Siapakah Margaret Floy Washburn dalam sejarah psikologi (1894)?", back: "Wanita pertama dalam sejarah yang resmi dianugerahi gelar PhD Psikologi di Cornell University dan pengarang buku 'The Animal Mind'.", impact: "Membuka jalan bagi peranan akademis wanita dalam ilmu psikologi." },
+            { id: 28, cat: "Psikoanalisis", front: "Apa arti penting penerbitan 'Studies on Hysteria' oleh Freud & Breuer (1895)?", back: "Buku ini memperkenalkan kasus Anna O. dan metode katarsis (talking cure) yang menjadi titik awal lahirnya Psikoanalisis.", impact: "Awal mula modalitas psikoterapi berbasis pengungkapan konflik tak sadar." },
+            { id: 29, cat: "Psikometri", front: "Apa tujuan Binet dan Simon menciptakan tes inteligensi pertama pada 1905?", back: "Untuk mengukur kemampuan mental anak-anak sekolah di Prancis secara objektif guna mengidentifikasi mereka yang membutuhkan bantuan pendidikan khusus.", impact: "Awal mulanya gerakan pengujian mental dan alat ukur psikometri." },
+            { id: 30, cat: "Gestalt", front: "Apa itu Fenomena Phi yang diteliti Max Wertheimer pada 1912?", back: "Ilusi gerakan perseptual ketika dua lampu diam dinyalakan bergantian secara cepat, membuktikan bahwa otak mempersepsi pola keseluruhan bukan sekadar titik terpisah.", impact: "Melahirkan aliran Psikologi Gestalt: 'The whole is other than the sum of its parts'." },
+            { id: 31, cat: "Sejarah Tokoh", front: "Siapakah Francis Cecil Sumner (1920)?", back: "Pria Afrika-Amerika pertama yang berhasil meraih gelar PhD dalam bidang psikologi di Clark University.", impact: "Pelopor inklusivitas rasial dan riset kesetaraan dalam pendidikan psikologi." },
+            { id: 32, cat: "Behaviorisme", front: "Apa yang dibuktikan oleh eksperimen 'Little Albert' (Watson & Rayner, 1920)?", back: "Eksperimen membuktikan bahwa respons emosional (seperti rasa takut pada hewan berbulu) dapat dibentuk pada manusia melalui pengondisian klasik.", impact: "Dasar teori pembentukan fobia dan modalitas terapi perilaku." },
+            { id: 33, cat: "Behaviorisme", front: "Bagaimana proses Pengondisian Klasik (Classical Conditioning) Ivan Pavlov terjadi?", back: "Asosiasi berulang antara Stimulus Tak Terondisikan (UCS, contoh: makanan) dengan Stimulus Terondisikan (CS, contoh: bel) menghasilkan Respons Terondisikan (CR).", impact: "Prinsip utama pembelajaran asosiatif dalam Behaviorisme." },
+            { id: 34, cat: "Behaviorisme", front: "Apa perbedaan Pengondisian Operan B.F. Skinner dengan Pengondisian Klasik?", back: "Pengondisian Operan berfokus pada bagaimana konsekuensi perilaku (penguat/reinforcement atau hukuman/punishment) mengubah frekuensi munculnya perilaku tersebut.", impact: "Diterapkan luas dalam modifikasi perilaku, pendidikan, dan pelatihan." },
+            { id: 35, cat: "Humanistik", front: "Apa tiga kondisi utama dalam Terapi Berpusat Pada Klien (Carl Rogers, 1942)?", back: "1. Empati akurat, 2. Unconditional Positive Regard (Penerimaan Tanpa Syarat), dan 3. Kongruensi/Autentisitas terapis.", impact: "Merevolusi konseling humanistik dan hubungan terapeutik." },
+            { id: 36, cat: "Humanistik", front: "Bagaimana urutan Hierarki Kebutuhan Abraham Maslow (1943)?", back: "Fisiologis -> Rasa Aman -> Kasih Sayang/Penerimaan -> Penghargaan Diri -> Aktualisasi Diri.", impact: "Model motivasi humanistik terpopuler dalam psikologi dan manajemen." },
+            { id: 37, cat: "Psikologi Klinis", front: "Apa itu Model Boulder (1949) dalam pendidikan psikologi klinis?", back: "Model pelatih ilmiah-praktisi (Scientist-Practitioner Model) yang mewajibkan psikolog klinis menguasai metodologi riset ilmiah sekaligus keahlian praktik klinis.", impact: "Standar emas kurikulum pendidikan doktoral psikologi klinis." },
+            { id: 38, cat: "Psikiatri & Klinis", front: "Apa tujuan penerbitan edisi pertama DSM (DSM-1) pada tahun 1952?", back: "Untuk menyediakan standar kriteria diagnosis dan kualifikasi resmi gangguan jiwa bagi tenaga medis dan psikolog klinis.", impact: "Awal timbulnya sistem kriteria diagnosis psikiatris terstruktur." },
+            { id: 39, cat: "Psikologi Sosial", front: "Bagaimana peran studi boneka Kenneth dan Mamie Clark (1954) dalam sejarah hukum?", back: "Riset Clark membuktikan dampak buruk segregasi rasial pada harga diri anak-anak, yang digunakan Mahkamah Agung US untuk menghapus segregasi sekolah (Brown v. Board).", impact: "Bukti nyata peran riset psikologi sosial dalam kebijakan publik dan hak asasi." },
+            { id: 40, cat: "Kognitif", front: "Apa yang dimaksud dengan Triad Depresi dalam Terapi Kognitif Aaron Beck (1963)?", back: "Pikiran otomatis irasional dan pandangan negatif terhadap: 1. Diri sendiri, 2. Dunia/lingkungan, dan 3. Masa depan.", impact: "Landasan modalitas Terapi Perilaku Kognitif (CBT)." },
+            { id: 41, cat: "Kognitif", front: "Bagaimana Ulric Neisser mendefinisikan 'Cognitive Psychology' (1967)?", back: "Kajian tentang seluruh proses di mana input sensorik ditransformasikan, dikurangi, dielaborasi, disimpan, ditemukan kembali, dan digunakan oleh otak.", impact: "Mengokohkan pemrosesan informasi kognitif sebagai cabang utama sains." },
+            { id: 42, cat: "Psikologi Sosial", front: "Apa tujuan pendirian Association of Black Psychologists (ABPsi) pada tahun 1968?", back: "Untuk mengatasi bias rasial dalam alat tes psikologi, memperjuangkan hak profesional minoritas, dan mengembangkan psikologi berbasis kebudayaan.", impact: "Memelopori psikologi lintas budaya dan keberagaman rasial." },
+            { id: 43, cat: "Sejarah Klinis", front: "Keputusan bersejarah apa yang diambil APA pada tahun 1973 terkait DSM?", back: "APA secara resmi mencabut homoseksualitas dari daftar diagnosis gangguan jiwa setelah mengevaluasi bukti riset ilmiah komprehensif.", impact: "Langkah besar penghapusan stigma sosial berbasis bukti ilmiah." },
+            { id: 44, cat: "Evolusioner", front: "Apa fokus utama dari aliran Psikologi Evolusioner (Wilson & Dawkins, 1975)?", back: "Menjelaskan bahwa mekanisme psikologis dan perilaku sosial manusia berevolusi melalui seleksi alam untuk memecahkan masalah adaptasi survival genetik.", impact: "Menghubungkan psikologi dengan biologi evolusioner dan etologi." },
+            { id: 45, cat: "Kognitif & Forensik", front: "Apa temuan utama Elizabeth Loftus tentang memori manusia (1979)?", back: "Loftus membuktikan bahwa memori manusia bersifat rekonstruktif dan sangat mudah terdistorsi oleh informasi yang menyesatkan (misinformation effect).", impact: "Merevolusi praktik kesaksian mata dalam psikologi forensik dan sistem peradilan." },
+            { id: 46, cat: "Neurosains", front: "Mengapa Roger Sperry meraih Hadiah Nobel pada tahun 1981?", back: "Atas penelitian pada pasien 'otak belah' (split-brain) yang membuktikan adanya spesialisasi fungsi antara hemisfer otak kiri (verbal/analitis) dan kanan (spasial/holistik).", impact: "Landasan penting neurosains kognitif modern." },
+            { id: 47, cat: "Psikologi Positif", front: "Apa fokus utama dari gerakan Psikologi Positif yang dipelopori Martin Seligman (1991)?", back: "Mengarahkan fokus psikologi dari sekadar mengobati gangguan (patologi) ke studi kekuatan karakter, resiliensi, kebahagiaan, dan kesejahteraan (flourishing).", impact: "Mengubah paradigma psikologi menuju keberfungsian manusia yang optimal." },
+            { id: 48, cat: "Kognitif & Ekonomi", front: "Apa kontribusi Daniel Kahneman sehingga meraih Nobel Ekonomi tahun 2002?", back: "Riset bersama Amos Tversky mengenai bias kognitif dan dua sistem berpikir dalam pengambilan keputusan: Sistem 1 (cepat/intuitif) & Sistem 2 (lambat/analitis).", impact: "Melahirkan bidang Ekonomi Perilaku (Behavioral Economics)." },
+            { id: 49, cat: "Psikiatri", front: "Apa keunggulan pendekatan diagnosis dalam DSM-5 (2013)?", back: "Mengadopsi pendekatan dimensi fungsional dan spektrum (seperti Autisme Spectrum Disorder) daripada kategori kaku.", impact: "Pembaruan fleksibilitas diagnosis psikiatri abad ke-21." },
+            { id: 50, cat: "Kontemporer", front: "Apa isi Resolusi Resmi APA pada tahun 2021 kepada publik?", back: "APA secara resmi menyampaikan permohonan maaf atas peran historis psikologi dalam mendukung rasisme sistemis dan berkomitmen mendorong keadilan sosial serta inklusivitas.", impact: "Transformasi psikologi kontemporer menuju kesetaraan global." }
+        ];
+
+        // 50 Accurate & Specific Quiz Questions Dataset
+        const quizData = [
+            {
+                q: "Siapakah tokoh filsuf Yunani Kuno yang pertama kali menjadikan penyelidikan 'psyche' / jiwa sebagai objek ilmiah terpisah melalui karya 'De Anima'?",
+                options: ["Plato", "Aristoteles", "Socrates", "Hippocrates"],
+                answer: 1,
+                explanation: "Aristoteles mendirikan Lyceum (335 BCE) dan menulis 'De Anima', menjadikannya pencetus awal yang memperlakukan jiwa sebagai studi ilmiah terpisah.",
+                era: "Yunani Kuno (BCE)"
+            },
+            {
+                q: "Peristiwa apakah pada tahun 1879 yang secara universal diakui sebagai peresmian psikologi sebagai disiplin ilmu mandiri?",
+                options: [
+                    "Penerbitan buku William James 'Principles of Psychology'",
+                    "Pendirian laboratorium psikologi eksperimental oleh Wilhelm Wundt di Leipzig",
+                    "Formulasi manifesto Behaviorisme oleh John B. Watson",
+                    "Publikasi teori Psikoanalisis oleh Sigmund Freud"
+                ],
+                answer: 1,
+                explanation: "Wilhelm Wundt mendirikan laboratorium psikologi eksperimental pertama di Universitas Leipzig pada 1879, memisahkan psikologi dari filsafat murni.",
+                era: "Era Modern (1879)"
+            },
+            {
+                q: "Aliran psikologi manakah yang mengusung prinsip bahwa persepsi manusia bersifat holistik ('keseluruhan berbeda dari sekadar penjumlahan bagian-bagiannya')?",
+                options: ["Strukturalisme", "Fungsionalisme", "Psikologi Gestalt", "Behaviorisme"],
+                answer: 2,
+                explanation: "Psikologi Gestalt (Wertheimer, Koffka, Köhler) menekankan bahwa persepsi manusia diorganisir secara holistik.",
+                era: "Awal Abad ke-20"
+            },
+            {
+                q: "Tiga filsuf Milesian (Thales, Anaximenes, Anaximander) dikenal dalam sejarah psikologi karena memberikan kontribusi berupa:",
+                options: [
+                    "Eksperimen pertama tentang memori dan persepsi sensorik",
+                    "Penjelasan rasional non-mistis pertama tentang alam semesta dan asal-usul materi",
+                    "Penemuan struktur otak sebagai pusat kesadaran manusia",
+                    "Klasifikasi pertama gangguan psikologis berbasis cairan tubuh"
+                ],
+                answer: 1,
+                explanation: "Para filsuf Pre-Sokratik Milesian meletakkan fondasi sains dengan mengganti penjelasan mitologis menggunakan logika rasional empiris.",
+                era: "Yunani Kuno (600–469 BCE)"
+            },
+            {
+                q: "Tokoh Yunani Kuno yang pertama kali mencatat bahwa organ otak terlibat langsung dalam proses sensorik melalui saluran pneuma adalah:",
+                options: ["Alcmaeon dari Croton", "Empedocles", "Galen", "Socrates"],
+                answer: 0,
+                explanation: "Alcmaeon dari Croton (510 BCE) adalah tokoh pertama dalam catatan sejarah yang mengatribusikan fungsi persepsi sensorik pada organ otak.",
+                era: "Yunani Kuno (510 BCE)"
+            },
+            {
+                q: "Menurut Hippocrates, gangguan fisik maupun mental manusia disebabkan oleh ketidakseimbangan dari:",
+                options: [
+                    "Elemen atom dan ruang hampa",
+                    "Empat cairan tubuh (darah, empedu kuning, empedu hitam, dahak)",
+                    "Hasrat tak sadar dan mekanisme pertahanan diri",
+                    "Fungsi sensorik dan refleks motorik"
+                ],
+                answer: 1,
+                explanation: "Hippocrates merumuskan Teori Humorik yang menyatakan bahwa keseimbangan 4 cairan tubuh menentukan kesehatan fisik dan mental.",
+                era: "Yunani Kuno (460–377 BCE)"
+            },
+            {
+                q: "Pendekatan filsafat Socrates yang menjadi cikal bakal teknik introspeksi dan eksplorasi diri dalam psikologi adalah:",
+                options: [
+                    "Pengamatan eksperimental",
+                    "Metode dialektika dan analisis kritis reflektif",
+                    "Pengondisian asosiatif",
+                    "Pengukuran psikofisika"
+                ],
+                answer: 1,
+                explanation: "Socrates menggunakan dialog dialektika kritis untuk mendorong individu mengamatinya diri secara mendalam ('know thyself').",
+                era: "Yunani Kuno (470–399 BCE)"
+            },
+            {
+                q: "Plato meyakini bahwa pengetahuan sejati tidak diperoleh dari indera yang menipu, melainkan melalui penalaran bawaan jiwa. Pandangan ini mendasari tradisi:",
+                options: ["Empirisme", "Rasionalisme", "Behaviorisme", "Materialisme"],
+                answer: 1,
+                explanation: "Plato menekankan Theory of Forms dan Rasionalisme bahwa kebenaran hakiki diperoleh melalui akal budi murni.",
+                era: "Yunani Kuno (428–347 BCE)"
+            },
+            {
+                q: "Galen menyempurnakan teori Hippocrates dengan merumuskan tipologi kepribadian berdasarkan empat temperamen utama, yaitu:",
+                options: [
+                    "Koleris, Melankolis, Sanguinis, Phlegmatis",
+                    "Introvert, Ekstrovert, Ambivert, Neurotik",
+                    "Id, Ego, Superego, Libido",
+                    "Sensorik, Motorik, Kognitif, Afektif"
+                ],
+                answer: 0,
+                explanation: "Galen menghubungkan dominasi cairan tubuh dengan empat tipe temperamen kepribadian dasar.",
+                era: "Kuno / Awal CE (129–199 CE)"
+            },
+            {
+                q: "Tokoh Zaman Keemasan Islam yang memberikan kontribusi besar pada studi persepsi visual dan optik eksperimental adalah:",
+                options: ["Ibn Sina (Avicenna)", "Ibn al-Haytham (Alhazen)", "Al-Razi (Rhazes)", "Ibn Rushd (Averroes)"],
+                answer: 1,
+                explanation: "Alhazen (Ibn al-Haytham) merevolusi pemahaman ilmiah mengenai pembentukan bayangan visual pada mata dan psikofisika persepsi.",
+                era: "Islamic Golden Age (800–1500 CE)"
+            },
+            {
+                q: "Istilah latin 'Psichiologia' pertama kali digunakan dalam literatur tertulis pada awal abad ke-16 oleh humanis Kroasia bernama:",
+                options: ["Marko Marulić", "Rudolf Göckel", "Desiderius Erasmus", "Philip Melanchthon"],
+                answer: 0,
+                explanation: "Marko Marulić menggunakan istilah 'Psichiologia de ratione animae humanae' antara tahun 1450–1524.",
+                era: "Renaisans (1450–1524 CE)"
+            },
+            {
+                q: "Konsep René Descartes bahwa pikiran (mind) dan tubuh (body) adalah dua substansi terpisah yang berinteraksi di kelenjar pineal dikenal sebagai:",
+                options: ["Monisme Materialistik", "Dualisme Interaksionis", "Epifenomenalisme", "Paralelisme Psikofisik"],
+                answer: 1,
+                explanation: "Descartes mengemukakan Dualisme Interaksionis yang menjelaskan hubungan mekanistik raga dan persepsi mental jiwa.",
+                era: "Awal CE / Filsafat Modern (1637 CE)"
+            },
+            {
+                q: "John Locke mengajukan konsep 'Tabula Rasa' yang menyatakan bahwa saat lahir, pikiran manusia adalah:",
+                options: [
+                    "Sudah membawa ide-ide bawaan sejak lahir",
+                    "Kertas kosong yang diisi sepenuhnya oleh pengalaman sensorik",
+                    "Struktur yang dikendalikan oleh dorongan ketidaksadaran",
+                    "Sistem saraf yang siap merespons refleks fisiologis"
+                ],
+                answer: 1,
+                explanation: "Tabula rasa berarti kertas kosong, menjadi pilar Empirisme bahwa pengetahuan berasal dari pengalaman indrawi.",
+                era: "Empirisme Abad ke-17 (1690 CE)"
+            },
+            {
+                q: "Francis Bacon dalam karyanya 'Novum Organum' memelopori pendekatan ilmiah yang sangat memengaruhi riset psikologi, yaitu:",
+                options: [
+                    "Penalaran Deduktif Murni",
+                    "Metode Induktif berbasis Pengamatan Empiris",
+                    "Analisis Spekulatif Metafisika",
+                    "Introspeksi Subjektif"
+                ],
+                answer: 1,
+                explanation: "Francis Bacon menekankan pentingnya metode induktif dan eksperimentasi faktual dalam metode ilmiah.",
+                era: "Awal CE (1620 CE)"
+            },
+            {
+                q: "Tokoh pembaru Prancis yang memelopori penanganan manusiawi bagi penderita gangguan mental melalui 'terapi moral' adalah:",
+                options: ["Philippe Pinel", "Jean-Martin Charcot", "Franz Anton Mesmer", "Wilhelm Griesinger"],
+                answer: 0,
+                explanation: "Philippe Pinel membebaskan pasien gangguan jiwa dari belenggu fisik dan mengenalkan pendekatan perawatan medis yang manusiawi.",
+                era: "Era Modern Awal (1806 CE)"
+            },
+            {
+                q: "Hukum Bell-Magendie dalam neurofisiologi membuktikan pemisahan fungsional pada medula spinalis, yaitu:",
+                options: [
+                    "Saraf sensorik di bagian posterior dan saraf motorik di bagian anterior",
+                    "Otak kiri mengatur bahasa dan otak kanan mengatur spasial",
+                    "Sistem saraf simpatik dan parasimpatik",
+                    "Neuron aferen dan interneuron kortikal"
+                ],
+                answer: 0,
+                explanation: "Hukum Bell-Magendie secara anatomis membedakan jalur impuls sensorik (masuk) dan motorik (keluar).",
+                era: "Neurofisiologi Modern (1811 CE)"
+            },
+            {
+                q: "Ernst Heinrich Weber menemukan bahwa ambang batas perbedaan stimulus yang dirasakan manusia bergantung pada:",
+                options: [
+                    "Waktu reaksi fisiologis",
+                    "Rasio konstan dari intensitas stimulus awal",
+                    "Tingkat kesadaran subjek",
+                    "Daya hantar impuls saraf"
+                ],
+                answer: 1,
+                explanation: "Hukum Weber menyatakan bahwa Just Noticeable Difference (JND) merupakan proporsi konstan dari stimulus awal.",
+                era: "Psikofisika Modern (1834 CE)"
+            },
+            {
+                q: "Hermann von Helmholtz berhasil meruntuhkan mitos bahwa transmisi saraf bersifat instan dengan cara:",
+                options: [
+                    "Mengukur kecepatan impuls saraf secara presisi pada serat saraf hewan",
+                    "Memetakan area bahasa di korteks cerebri",
+                    "Menghitung ambang mutlak persepsi pendengaran",
+                    "Mengembangkan teknik stimulasi listrik otak"
+                ],
+                answer: 0,
+                explanation: "Helmholtz mengukur bahwa impuls saraf merambat pada kecepatan fisik terukur (sekitar 27–90 meter/detik).",
+                era: "Fisiologi Eksperimental (1850 CE)"
+            },
+            {
+                q: "Tokoh yang dianggap sebagai Bapa Psikofisika karena merumuskan hubungan matematis antara intensitas fisik dan persepsi subjektif adalah:",
+                options: ["Wilhelm Wundt", "Gustav Fechner", "Hermann Ebbinghaus", "Ernst Weber"],
+                answer: 1,
+                explanation: "Gustav Fechner menerbitkan 'Elements of Psychophysics' (1860) yang menghubungkan dunia fisik dan mental secara kuantitatif.",
+                era: "Awal Psikologi Eksperimental (1860 CE)"
+            },
+            {
+                q: "Penemuan Paul Broca pada tahun 1861 memberikan bukti empiris pertama mengenai:",
+                options: [
+                    "Mekanisme pengondisian refleks",
+                    "Lokalisasi fungsi spesifik (kemampuan bicara) di korteks otak",
+                    "Perbedaan impuls sensorik dan motorik",
+                    "Struktur memori jangka panjang"
+                ],
+                answer: 1,
+                explanation: "Broca menemukan bahwa kerusakan spesifik pada lobus frontalis kiri menyebabkan afasia ekspresif.",
+                era: "Neurosains Awal (1861 CE)"
+            },
+            {
+                q: "William James menolak Strukturalisme dan mendirikan Fungsionalisme karena ia memandang kesadaran sebagai:",
+                options: [
+                    "Kumpulan elemen sensasi yang dapat diisolasi",
+                    "Aliran yang terus mengalir (stream of consciousness) dan berfungsi adaptif",
+                    "Hasil sampingan refleks mekanistik tubuh",
+                    "Konflik antara dorongan biologis dan aturan sosial"
+                ],
+                answer: 1,
+                explanation: "William James menekankan bahwa fungsi adaptif kesadaran berorientasi pada kelangsungan hidup organisme.",
+                era: "Fungsionalisme (1890 CE)"
+            },
+            {
+                q: "Pendiri dan presiden pertama American Psychological Association (APA) pada tahun 1892 adalah:",
+                options: ["William James", "G. Stanley Hall", "Edward Titchener", "John B. Watson"],
+                answer: 1,
+                explanation: "G. Stanley Hall memprakarsai pendirian APA di Clark University pada tahun 1892.",
+                era: "Kelembagaan Psikologi (1892 CE)"
+            },
+            {
+                q: "Wanita pertama dalam sejarah yang dianugerahi gelar PhD resmi dalam bidang psikologi (1894) adalah:",
+                options: ["Mary Whiton Calkins", "Margaret Floy Washburn", "Karen Horney", "Anna Freud"],
+                answer: 1,
+                explanation: "Margaret Floy Washburn meraih doktor psikologi di Cornell University pada tahun 1894.",
+                era: "Sejarah Akademik Psikologi (1894 CE)"
+            },
+            {
+                q: "Sigmund Freud dan Josef Breuer menerbitkan 'Studies on Hysteria' (1895) yang menjadi titik awal lahirnya:",
+                options: [
+                    "Terapi Perilaku Kognitif",
+                    "Psikoanalisis dan Teori Ketidaksadaran",
+                    "Psikologi Humanistik",
+                    "Teori Belajar Sosial"
+                ],
+                answer: 1,
+                explanation: "Karya ini memuat kasus Anna O. dan penerapan metode katarsis yang berkembang menjadi psikoanalisis.",
+                era: "Awal Psikoanalisis (1895 CE)"
+            },
+            {
+                q: "Alfred Binet dan Theodore Simon mengembangkan tes inteligensi praktis pertama pada tahun 1905 dengan tujuan awal untuk:",
+                options: [
+                    "Mengukur IQ orang dewasa dalam seleksi kerja",
+                    "Mengidentifikasi anak-anak sekolah yang membutuhkan bantuan pendidikan khusus",
+                    "Menguji kapasitas memori jangka panjang subjek laboratorium",
+                    "Mengkatagorikan kepribadian bakat bawaan"
+                ],
+                answer: 1,
+                explanation: "Pemerintah Prancis menugaskan Binet dan Simon untuk membantu anak-anak berkebutuhan khusus di sekolah dasar.",
+                era: "Psikometri Modern (1905 CE)"
+            },
+            {
+                q: "Dalam manifesto 'Psychology as the Behaviorist Views It' (1913), John B. Watson menuntut agar psikologi:",
+                options: [
+                    "Fokus pada analisis struktur pengalaman sadar",
+                    "Meninggalkan studi kesadaran dan hanya meneliti perilaku yang dapat diamati",
+                    "Mengembangkan teknik analisis mimpi dan asosiasi bebas",
+                    "Memfokuskan riset pada kehendak bebas manusia"
+                ],
+                answer: 1,
+                explanation: "Watson menegaskan Behaviorisme sebagai cabang sains objektif yang berorientasi pada prediksi dan kontrol perilaku.",
+                era: "Lahirnya Behaviorisme (1913 CE)"
+            },
+            {
+                q: "Pria Afrika-Amerika pertama yang berhasil meraih gelar PhD dalam bidang Psikologi (1920) adalah:",
+                options: ["Kenneth Clark", "Francis Cecil Sumner", "Mamie Phipps Clark", "Claude Steele"],
+                answer: 1,
+                explanation: "Francis Cecil Sumner menyelesaikan doktornya di Clark University di bawah bimbingan G. Stanley Hall.",
+                era: "Sejarah Inklusivitas Psikologi (1920 CE)"
+            },
+            {
+                q: "Eksperimen 'Little Albert' yang dilakukan oleh Watson dan Rayner bertujuan untuk membuktikan bahwa:",
+                options: [
+                    "Anak-anak memiliki ketakutan bawaan terhadap hewan berbulu",
+                    "Respons emosional seperti rasa takut dapat dibentuk melalui pengondisian klasik",
+                    "Hukuman lebih efektif daripada penguat positif",
+                    "Anak kecil belajar melalui peniruan model sosial"
+                ],
+                answer: 1,
+                explanation: "Eksperimen Little Albert mengondisikan rasa takut pada bayi terhadap tikus putih melalui suara keras.",
+                era: "Behaviorisme Eksperimental (1920 CE)"
+            },
+            {
+                q: "Penemuan refleks terondisikan (conditioned reflex) oleh Ivan Pavlov berawal dari studi fisiologisnya terhadap:",
+                options: [
+                    "Sistem saraf pusat katak",
+                    "Sistem pencernaan dan sekresi saliva pada anjing",
+                    "Perilaku pemecahan masalah pada simpanse",
+                    "Kecepatan motorik pada manusia"
+                ],
+                answer: 1,
+                explanation: "Pavlov mengamati bahwa anjing mengeluarkan air liur sebelum makanan disajikan karena adanya asosiasi sinyal.",
+                era: "Pengondisian Klasik (1927 CE)"
+            },
+            {
+                q: "B.F. Skinner membedakan Pengondisian Klasik dengan Pengondisian Operan, di mana Pengondisian Operan berfokus pada:",
+                options: [
+                    "Asosiasi antara dua stimulus yang terjadi bersamaan",
+                    "Perilaku yang dipengaruhi oleh konsekuensi (penguat atau hukuman) yang mengikutinya",
+                    "Proses kognitif internal saat memecahkan masalah",
+                    "Refleks fisiologis otomatis terhadap stimulus spesifik"
+                ],
+                answer: 1,
+                explanation: "Pengondisian Operan Skinner menekankan bagaimana penguat (reinforcement) dan hukuman membentuk frekuensi perilaku.",
+                era: "Behaviorisme Radikal (1938 CE)"
+            },
+            {
+                q: "Carl Rogers memelopori pendekatan terapi yang berpusat pada klien (Person-Centered Therapy) yang berlandaskan pada:",
+                options: [
+                    "Interpretasi simbolik terhadap mimpi pasien",
+                    "Pemberian penguat perilaku secara ketat",
+                    "Sikap empati, penerimaan tanpa syarat (unconditional positive regard), dan kongruensi",
+                    "Restrukturisasi distorsi kognitif irasional"
+                ],
+                answer: 2,
+                explanation: "Rogers menekankan hubungan terapeutik yang empatik dan tidak menghakimi agar klien tumbuh secara optimal.",
+                era: "Psikologi Humanistik (1942 CE)"
+            },
+            {
+                q: "Abraham Maslow terkenal dalam psikologi humanistik karena merumuskan konsep:",
+                options: [
+                    "Mekanisme Pertahanan Diri",
+                    "Hierarki Kebutuhan Manusia menuju Aktualisasi Diri",
+                    "Skema Kognitif dan Trias Depresi",
+                    "Operant Conditioning Chamber"
+                ],
+                answer: 1,
+                explanation: "Maslow menyusun piramida kebutuhan mulai dari fisiologis hingga puncak aktualisasi diri.",
+                era: "Psikologi Humanistik (1943 CE)"
+            },
+            {
+                q: "Model Boulder yang disepakati pada Konferensi Psikologi Klinis tahun 1949 menetapkan standar pendidikan psikolog klinis sebagai:",
+                options: [
+                    "Praktisi Medis Murni",
+                    "Ilmuwan sekaligus Praktisi (Scientist-Practitioner Model)",
+                    "Peneliti Akademis Laboratorium Murni",
+                    "Terapis Perilaku Terapan"
+                ],
+                answer: 1,
+                explanation: "Model Boulder memadukan pelatihan riset empiris ilmiah dengan keahlian praktik aplikasi klinis.",
+                era: "Psikologi Klinis Modern (1949 CE)"
+            },
+            {
+                q: "American Psychiatric Association menerbitkan edisi pertama Diagnostic and Statistical Manual of Mental Disorders (DSM-1) pada tahun 1952 untuk:",
+                options: [
+                    "Menggantikan penggunaan tes psikologi",
+                    "Menyediakan standar kriteria diagnosis gangguan jiwa yang terstruktur",
+                    "Melarang praktik psikoterapi non-medis",
+                    "Menghapuskan kategori patologi klinis"
+                ],
+                answer: 1,
+                explanation: "DSM-1 memberikan nomenklatur resmi dan kriteria standar dalam mendiagnosis gangguan psikiatris.",
+                era: "Nomenklatur Klinis (1952 CE)"
+            },
+            {
+                q: "Riset psikologi sosial Kenneth dan Mamie Clark mengenai dampak segregasi rasial pada boneka anak digunakan oleh Mahkamah Agung US pada 1954 dalam kasus bersejarah:",
+                options: [
+                    "Miranda v. Arizona",
+                    "Brown v. Board of Education",
+                    "Roe v. Wade",
+                    "Plessy v. Ferguson"
+                ],
+                answer: 1,
+                explanation: "Studi boneka Clark terbukti ilmiah menunjukkan dampak buruk segregasi sekolah terhadap harga diri anak.",
+                era: "Psikologi Sosial & Hak Sipil (1954 CE)"
+            },
+            {
+                q: "Ulasan kritis Noam Chomsky (1959) terhadap buku 'Verbal Behavior' karya Skinner menjadi pemicu Revolusi Kognitif karena membuktikan bahwa:",
+                options: [
+                    "Bahasa dipelajari sepenuhnya melalui pembiasaan operan",
+                    "Manusia memiliki kapasitas tata bahasa bawaan yang tidak bisa dijelaskan sekadar S-R",
+                    "Anak-anak tidak mampu memahami tata bahasa kompleks",
+                    "Bahasa hanya merupakan refleks motorik vokal"
+                ],
+                answer: 1,
+                explanation: "Chomsky menunjukkan bahwa pengondisian S-R tidak dapat menjelaskan kreativitas dan kepatuhan aturan tata bahasa anak.",
+                era: "Revolusi Kognitif (1959 CE)"
+            },
+            {
+                q: "Aaron T. Beck mengembangkan Terapi Kognitif (CBT) setelah menemukan bahwa pasien depresi mengalami:",
+                options: [
+                    "Ketidakseimbangan cairan empedu hitam",
+                    "Distorsi kognitif dan pikiran otomatis negatif tentang diri, dunia, dan masa depan",
+                    "Penekanan dorongan agresif tak sadar",
+                    "Kurangnya pengondisian operan positif"
+                ],
+                answer: 1,
+                explanation: "Beck merumuskan 'Triad Depresi' yang berfokus pada evaluasi dan restrukturisasi pola pikir irasional.",
+                era: "Psikoterapi Kognitif (1963 CE)"
+            },
+            {
+                q: "Buku monumental 'Cognitive Psychology' yang diterbitkan oleh Ulric Neisser pada tahun 1967 mendefinisikan kognisi sebagai:",
+                options: [
+                    "Proses transformasi, pengurangan, elaborasi, penyimpanan, dan penggunaan input sensorik",
+                    "Aktivitas refleks fisiologis di medula spinalis",
+                    "Ungkapan potensi aktualisasi diri subjektif",
+                    "Pengondisian perilaku yang tampak dari luar"
+                ],
+                answer: 0,
+                explanation: "Neisser secara formal mengukuhkan pemrosesan informasi kognitif sebagai subdisiplin utama ilmu psikologi.",
+                era: "Sains Kognitif (1967 CE)"
+            },
+            {
+                q: "Association of Black Psychologists (ABPsi) didirikan pada tahun 1968 bertujuan utama untuk:",
+                options: [
+                    "Menolak penggunaan metode eksperimen laboratorium",
+                    "Menyuarakan kebutuhan masyarakat Afrika-Amerika dan mengatasi bias rasial dalam psikologi",
+                    "Mengembangkan alat tes inteligensi murni biologis",
+                    "Mendukung paradigma Behaviorisme Radikal"
+                ],
+                answer: 1,
+                explanation: "ABPsi didirikan untuk menjamin keadilan rasial dan integrasi budaya dalam keahlian psikologi.",
+                era: "Psikologi Keberagaman (1968 CE)"
+            },
+            {
+                q: "Keputusan penting American Psychiatric Association pada tahun 1973 terkait kesehatan mental adalah:",
+                options: [
+                    "Menghapuskan penggunaan terapi electroconvulsive (ECT)",
+                    "Mencabut homoseksualitas dari daftar diagnosis gangguan mental dalam DSM",
+                    "Mewajibkan tes IQ dalam diagnosis klinis",
+                    "Menolak pendekatan psikofarmakologi"
+                ],
+                answer: 1,
+                explanation: "APA mencabut homoseksualitas dari daftar gangguan jiwa setelah evaluasi ulang berbasis bukti ilmiah.",
+                era: "Pembaruan DSM (1973 CE)"
+            },
+            {
+                q: "Pendekatan Psikologi Evolusioner yang dipelopori oleh E.O. Wilson dan Richard Dawkins menjelaskan perilaku manusia sebagai hasil dari:",
+                options: [
+                    "Mekanisme adaptasi mental yang berkembang melalui seleksi alam untuk kelangsungan genetik",
+                    "Pengondisian lingkungan sosial budaya setempat",
+                    "Konflik tak sadar antara Id dan Superego",
+                    "Pola distorsi skema kognitif sejak kecil"
+                ],
+                answer: 0,
+                explanation: "Psikologi Evolusioner mempelajari bagaimana mekanisme psikologis berevolusi untuk memecahkan masalah adaptif survival.",
+                era: "Psikologi Evolusioner (1975 CE)"
+            },
+            {
+                q: "Riset pionir Elizabeth Loftus pada tahun 1979 mengenai kesaksian mata (eyewitness testimony) membuktikan bahwa memori manusia bersifat:",
+                options: [
+                    "Rekaman sempurna yang tidak pernah berubah",
+                    "Rekonstruktif dan rentan terhadap manipulasi atau informasi yang menyesatkan",
+                    "Sepenuhnya ditentukan oleh genetik bawaan",
+                    "Tidak dapat dipengaruhi oleh pertanyaan pemeriksa"
+                ],
+                answer: 1,
+                explanation: "Loftus membuktikan bahwa memori tidak bekerja seperti perekam video, melainkan dapat terkonstruksi ulang oleh sugesti luar.",
+                era: "Psikologi Forensik & Memori (1979 CE)"
+            },
+            {
+                q: "Roger Sperry dianugerahi Hadiah Nobel pada tahun 1981 atas penemuannya mengenai:",
+                options: [
+                    "Struktur heliks ganda DNA",
+                    "Spesialisasi fungsional hemisfer otak kiri dan kanan pada pasien otak belah (split-brain)",
+                    "Mekanisme transmisi kimiawi sinapsis",
+                    "Lokalisasi memori jangka panjang di hipokampus"
+                ],
+                answer: 1,
+                explanation: "Riset Sperry pada pasien pemotongan korpus kalosum membuktikan spesialisasi fungsional hemisferis otak.",
+                era: "Neurosains Kognitif (1981 CE)"
+            },
+            {
+                q: "Martin Seligman memprakarsai gerakan Psikologi Positif pada tahun 1990-an untuk mengarahkan fokus psikologi pada:",
+                options: [
+                    "Pengobatan gangguan kepribadian berat saja",
+                    "Studi tentang kekuatan karakter, kebahagiaan, ketangguhan (resilience), dan kesejahteraan subjektif",
+                    "Pengondisian perilaku kerja di industri",
+                    "Analisis neuroanatomi struktur amigdala"
+                ],
+                answer: 1,
+                explanation: "Psikologi Positif melengkapi paradigma patologis dengan meneliti potensi keberfungsian manusia yang optimal.",
+                era: "Psikologi Positif (1991 CE)"
+            },
+            {
+                q: "Psikolog Daniel Kahneman meraih Hadiah Nobel Ekonomi pada tahun 2002 atas risetnya tentang:",
+                options: [
+                    "Pengondisian operan dalam keputusan konsumen",
+                    "Bias kognitif dan heuristik dalam pengambilan keputusan manusia (Sistem 1 & Sistem 2)",
+                    "Pengukuran IQ dalam produktivitas kerja",
+                    "Dinamika konflik kelompok sosial"
+                ],
+                answer: 1,
+                explanation: "Kahneman menggabungkan psikologi kognitif dengan ekonomi untuk menjelaskan pengambilan keputusan di bawah ketidakpastian.",
+                era: "Ekonomi Perilaku (2002 CE)"
+            },
+            {
+                q: "Pembaruan utama dalam publikasi DSM-5 oleh American Psychiatric Association pada tahun 2013 adalah penerapan:",
+                options: [
+                    "Pendekatan diagnosis berbasis spektrum dan dimensi fungsional",
+                    "Penghapusan seluruh kriteria gangguan kecemasan",
+                    "Pengembalian ke klasifikasi Psikoanalisis klasik",
+                    "Penggunaan tes Rorschach sebagai standar utama"
+                ],
+                answer: 0,
+                explanation: "DSM-5 beralih dari model multiaxial kaku ke pendekatan spektrum dan penilaian fungsional bermakna.",
+                era: "Psikiatri Kontemporer (2013 CE)"
+            },
+            {
+                q: "Permohonan maaf resmi yang disampaikan oleh American Psychological Association (APA) pada tahun 2021 berkaitan dengan:",
+                options: [
+                    "Kesalahan dalam kuis evaluasi mahasiswa",
+                    "Peran historis disiplin psikologi dalam berkontribusi pada rasisme dan ketimpangan sistemik",
+                    "Kegagalan prediksi eksperimen behaviorisme",
+                    "Penggunaan metode introspeksi eksperimental"
+                ],
+                answer: 1,
+                explanation: "Resolusi resmi APA 2021 mengakui kegagalan historis serta berkomitmen mendorong kesetaraan dan keadilan sosial.",
+                era: "Psikologi Kontemporer (2021 CE)"
+            },
+            {
+                q: "Edward B. Titchener membawa ajaran Wundt ke Amerika Serikat dan mendirikan aliran Strukturalisme dengan tujuan memetakan:",
+                options: [
+                    "Fungsi adaptif dari perilaku di lingkungan",
+                    "Elemen-elemen dasar dari struktur kesadaran menggunakan introspeksi",
+                    "Proses kognitif komputerisasi memori",
+                    "Dinamika libido dan ketidaksadaran"
+                ],
+                answer: 1,
+                explanation: "Strukturalisme Titchener berfokus mengurai kesadaran menjadi komponen dasar fisiologis indrawi.",
+                era: "Strukturalisme Classical"
+            },
+            {
+                q: "Tokoh psikologi sosial Kurt Lewin terkenal dengan 'Teori Lapangan' (Field Theory) yang menyatakan bahwa perilaku (B) adalah fungsi dari:",
+                options: [
+                    "Interaksi antara individu dan lingkungannya, B = f(P, E)",
+                    "Pengondisian stimulus dan respon semata, B = f(S, R)",
+                    "Dinamika Id dan Superego, B = f(Id, Superego)",
+                    "Struktur genetik dan bawaan lahir, B = f(G)"
+                ],
+                answer: 0,
+                explanation: "Kurt Lewin merumuskan rumus B = f(P, E) bahwa perilaku adalah interaksi person dan enviroment.",
+                era: "Psikologi Sosial Klasik"
+            },
+            {
+                q: "Lev Vygotsky mengemukakan Teori Sosio-Kultural yang menekankan bahwa perkembangan kognitif anak sangat dipengaruhi oleh:",
+                options: [
+                    "Proses kematangan biologis individu secara terisolasi",
+                    "Interaksi sosial, alat budaya, dan konsep Zone of Proximal Development (ZPD)",
+                    "Jadwal penguatan operan dari orang tua",
+                    "Penyelesaian konflik psikoseksual tahap awal"
+                ],
+                answer: 1,
+                explanation: "Vygotsky menekankan bahwa pembelajaran kognitif terjadi melalui interaksi sosial dan bantuan lingkungan (scaffolding).",
+                era: "Psikologi Perkembangan Sosio-Kultural"
+            }
+        ];
+
+        // Comprehensive Lab Cases Dataset
+        const caseStudies = [
+            {
+                id: 1,
+                title: "Kasus 1: Fobia Spesifik & Kecemasan Berlebih (Little Albert & Modern)",
+                desc: "Seorang individu mengalami kecemasan ekstrem dan respons panik setiap kali melihat objek berbulu putih atau berada di ruang tertutup.",
+                analysis: {
+                    behaviorism: "Disebabkan oleh hasil pengondisian klasik (Classical Conditioning) di mana stimulus netral terasosiasi berulang kali dengan stimulus menakutkan (S-R).",
+                    psychoanalysis: "Menunjukkan adanya konflik ketidaksadaran yang ditekan (repression) dan disimbolkan melalui objek ketakutan.",
+                    cognitive: "Disebabkan oleh distorsi kognitif, evaluasi ancaman yang irasional (catastrophizing), dan pemrosesan bias memori.",
+                    biological: "Disebabkan oleh hiperaktivitas amigdala dan ketidakseimbangan regulasi neurotransmiter (GABA/Serotonin) di otak.",
+                    evolutionary: "Sensitivitas ketakutan pada ancaman spesifik (hewan berbulu, ruang sempit) merupakan mekanisme adaptif bawaan yang dulunya meningkatkan kelangsungan hidup dari ancaman predator.",
+                    positive: "Penanganan berfokus pada pengembangan regulasi emosi, memperkuat efikasi diri (self-efficacy), dan teknik mindfulness untuk pemulihan ketangguhan (resilience)."
+                }
+            },
+            {
+                id: 2,
+                title: "Kasus 2: Burnout & Penurunan Motivasi Kerja di Era Digital",
+                desc: "Karyawan mengalami penurunan performa dramatis, kelelahan emosional, dan perasaan hampa meskipun menerima kompensasi finansial yang tinggi.",
+                analysis: {
+                    humanistic: "Terjadi akibat terhambatnya hierarki kebutuhan aktualisasi diri dan hilangnya otonomi serta makna hidup pribadi.",
+                    behaviorism: "Terjadi karena jadwal penguat (reinforcement schedule) yang tidak konsisten dan tingginya stimulus hukuman/stres kerja.",
+                    cognitive: "Terbentuk dari skema kognitif 'helplessness' dan persepsi ketidakmampuan mengontrol beban kerja.",
+                    socio_cultural: "Dampak dari ekspektasi budaya performativitas tinggi, glorifikasi kerja berlebih, dan hilangnya dukungan komunitas lokal.",
+                    positive: "Fokus pada pengoptimalan kekuatan karakter (character strengths), rekonstruksi keterlibatan kerja (job crafting), serta membangun kesejahteraan subjektif (subjective well-being).",
+                    evolutionary: "Mekanisme keletihan ekstrem timbul akibat pemaksaan respons stres kronis tanpa periode pemulihan, bertentangan dengan siklus aktivitas manusia purba."
+                }
+            },
+            {
+                id: 3,
+                title: "Kasus 3: Adiksi Media Sosial & Game Online pada Remaja",
+                desc: "Seorang remaja menghabiskan waktu 12 jam sehari di depan layar, mengabaikan sekolah dan interaksi sosial tatap muka, serta menjadi sangat agresif ketika akses internet diputus.",
+                analysis: {
+                    behaviorism: "Dipicu oleh penguatan intermiten (variable-ratio reinforcement) berupa 'likes' atau reward game yang membentuk habituasi adiktif kuat.",
+                    cognitive: "Disebabkan oleh keyakinan irasional tentang penerimaan diri, kecemasan FOMO, serta bias penilaian terhadap pencapaian virtual.",
+                    biological: "Terjadi akibat dorongan lonjakan dopamin berulang di jalur reward otak dan penurunan kontrol prefrontal cortex.",
+                    socio_cultural: "Dipengaruhi oleh tekanan kelompok sebaya (peer pressure) dan pergeseran norma komunikasi di era kecerdasan digital.",
+                    positive: "Pengalihan fokus ke aktivitas nyata yang membangun 'flow', restrukturisasi ikatan sosial tatap muka, dan latihan kesadaran penuh (mindfulness).",
+                    evolutionary: "Aplikasi media memanfaatkan dorongan evolusioner manusia untuk mencari penerimaan sosial dan hierarki status dalam kelompok."
+                }
+            },
+            {
+                id: 4,
+                title: "Kasus 4: Gangguan Stres Pascatrauma (PTSD) Korban Bencana",
+                desc: "Seorang penyintas bencana alam sering terbangun karena mimpi buruk, mengalami flashback traumatis, serta menarik diri secara emosional dari lingkungan sosial.",
+                analysis: {
+                    psychoanalysis: "Kegagalan mekanisme pertahanan ego dalam memproses ingatan traumatis yang sangat hebat sehingga ingatan tersebut menerobos ketidaksadaran.",
+                    behaviorism: "Generalisasi stimulus di mana isyarat lingkungan (seperti suara gemuruh atau kegelapan) menjadi stimulus terondisikan yang memicu kecemasan.",
+                    cognitive: "Terjadinya keretakan skema kognitif mendasar tentang keamanan dunia dan rasa ketidakberdayaan yang dipelajari (learned helplessness).",
+                    biological: "Sensitisasi berlebihan pada sistem saraf simpatis, pembesaran amigdala, serta penurunan volume hipokampus akibat stres kronis.",
+                    positive: "Intervensi diarahkan pada pertumbuhan pascatrauma (Post-Traumatic Growth), menemukan makna baru dalam hidup, dan memanfaatkan resiliensi bawaan.",
+                    socio_cultural: "Peran modal sosial komunitas, ritual budaya pemulihan bencana, serta reduksi stigma luka psikologis dalam proses penyembuhan."
+                }
+            },
+            {
+                id: 5,
+                title: "Kasus 5: Anoreksia Nervosa pada Remaja Putri",
+                desc: "Seorang remaja membatasi asupan makanan secara ekstrem karena merasa tubuhnya selalu gemuk, meskipun berat badannya sudah jauh di bawah standar medis.",
+                analysis: {
+                    cognitive: "Distorsi persepsi citra tubuh (body image distortion) dan skema kognitif perfeksionisme irasional terkait standar penampilan.",
+                    psychoanalysis: "Bentuk usaha tak sadar untuk menolak kedewasaan biologis atau wujud dari dorongan mengontrol diri atas trauma keluarga.",
+                    humanistic: "Upaya mencari keberhargaan diri dan penerimaan lingkungan yang salah arah akibat tidak terpenuhinya rasa aman dan dicintai.",
+                    socio_cultural: "Internalisasi standar kecantikan unrealistic dari media massa dan budaya pop yang mengagungkan bentuk tubuh sangat kurus.",
+                    positive: "Pengembangan penerimaan diri (self-compassion), pembentukan konsep diri positif yang bebas dari penampilan fisik, dan afirmasksi kekuatan diri.",
+                    evolutionary: "Respon pembatasan makanan ekstrem terhubung dengan naluri adaptasi masa kelaparan kuno yang terdistorsi oleh tekanan ekspektasi sosial."
+                }
+            }
+        ];
+
+        // State Variables
+        let currentFlashcardIndex = 0;
+        let isFlipped = false;
+        let cardStatus = new Array(50).fill(null);
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let userQuizAnswers = new Array(50).fill(null);
+
+        // App Initialization
+        document.addEventListener("DOMContentLoaded", () => {
+            renderTimeline();
+            renderParadigms();
+            updateFlashcardUI();
+            renderQuizQuestion();
+            renderLabCases();
+
+            // Keyboard Shortcut Listener for Flashcards
+            document.addEventListener('keydown', (e) => {
+                const flashcardTab = document.getElementById('tab-flashcard');
+                if (flashcardTab && !flashcardTab.classList.contains('hidden')) {
+                    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+                    if (e.key === 'ArrowRight') {
+                        nextCard();
+                    } else if (e.key === 'ArrowLeft') {
+                        prevCard();
+                    } else if (e.key === ' ' || e.key === 'Spacebar') {
+                        e.preventDefault();
+                        flipCard();
+                    }
+                }
+            });
+        });
+
+        // Navigation Functions
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-sky-400', 'bg-slate-800');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-sky-400', 'bg-slate-800');
+                activeNav.classList.remove('text-slate-300');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Timeline Functions
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            const search = document.getElementById('timeline-search').value.toLowerCase();
+            const era = document.getElementById('era-filter').value;
+
+            const filtered = timelineData.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search);
+                const matchesEra = (era === 'all') || (item.category === era);
+                return matchesSearch && matchesEra;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-slate-400 border border-slate-200">Tidak ada peristiwa sejarah yang cocok dengan filter pencarian.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:border-sky-300 transition flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 text-xs font-bold bg-sky-100 text-sky-800 rounded-md">${item.year}</span>
+                            <span class="text-xs text-slate-400 font-medium">${item.category}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800">${item.title}</h3>
+                        <p class="text-sm text-slate-600 line-clamp-2">${item.desc}</p>
+                    </div>
+                    <button onclick="openModal(${item.id})" class="px-4 py-2 bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-700 text-xs font-bold rounded-xl transition shrink-0">
+                        Detail Lengkap
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterTimeline() {
+            renderTimeline();
+        }
+
+        function openModal(id) {
+            const item = timelineData.find(x => x.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-year').innerText = item.year;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-impact').innerText = item.impact;
+
+            document.getElementById('modal-backdrop').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-backdrop').classList.add('hidden');
+        }
+
+        // Paradigm Functions
+        function renderParadigms() {
+            const list = document.getElementById('paradigm-list');
+            list.innerHTML = paradigmData.map((p, idx) => `
+                <button onclick="selectParadigm(${idx})" class="paradigm-btn w-full text-left p-3.5 rounded-xl text-sm font-semibold border border-slate-200 bg-white hover:border-sky-300 transition flex items-center justify-between">
+                    <span>${p.name}</span>
+                    <i class="fas fa-chevron-right text-xs text-slate-300"></i>
+                </button>
+            `).join('');
+
+            selectParadigm(0);
+        }
+
+        function selectParadigm(index) {
+            const p = paradigmData[index];
+            const detail = document.getElementById('paradigm-detail');
+
+            document.querySelectorAll('.paradigm-btn').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('bg-sky-50', 'border-sky-400', 'text-sky-900');
+                } else {
+                    btn.classList.remove('bg-sky-50', 'border-sky-400', 'text-sky-900');
+                }
+            });
+
+            detail.innerHTML = `
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 pb-3">
+                        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Profil Paradigma</span>
+                        <h2 class="text-2xl font-bold text-slate-900 mt-1">${p.name}</h2>
+                        <p class="text-sm text-slate-500 font-medium mt-1"><i class="fas fa-users text-sky-500 mr-1"></i> Tokoh Kunci: ${p.figures}</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Fokus Utama & Ontologi</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">${p.focus}</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Metode Utama</h4>
+                            <p class="text-xs text-slate-600">${p.method}</p>
+                        </div>
+                        <div class="p-4 bg-sky-50 rounded-xl border border-sky-100">
+                            <h4 class="text-xs font-bold text-sky-800 uppercase tracking-wider mb-1">Dampak terhadap Psikologi</h4>
+                            <p class="text-xs text-sky-700">${p.impact}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Flashcard Logic & UI Update
+        function updateFlashcardUI() {
+            const card = flashcards[currentFlashcardIndex];
+            if (!card) return;
+
+            const inner = document.getElementById('flashcard-inner');
+            if (isFlipped) {
+                inner.classList.remove('rotate-y-180');
+                isFlipped = false;
+            }
+
+            document.getElementById('card-category').innerText = card.cat;
+            document.getElementById('card-front').innerText = card.front;
+            document.getElementById('card-back').innerText = card.back;
+            document.getElementById('card-subtext').innerText = card.impact || 'PsikoHistori Pro Study Pack';
+            document.getElementById('flashcard-counter').innerText = `Kartu ${currentFlashcardIndex + 1} / 50`;
+
+            // Status Tag Update
+            const statusTag = document.getElementById('card-status-tag');
+            if (statusTag) {
+                if (cardStatus[currentFlashcardIndex] === true) {
+                    statusTag.className = "px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300";
+                    statusTag.innerHTML = `<i class="fas fa-check mr-1"></i> Paham`;
+                } else if (cardStatus[currentFlashcardIndex] === false) {
+                    statusTag.className = "px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800 border border-rose-300";
+                    statusTag.innerHTML = `<i class="fas fa-rotate-right mr-1"></i> Perlu Ulang`;
+                } else {
+                    statusTag.className = "px-2.5 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600 border border-slate-200";
+                    statusTag.innerHTML = `<i class="fas fa-minus mr-1"></i> Belum Dipelajari`;
+                }
+            }
+
+            // Counters Update
+            const pahamCount = cardStatus.filter(s => s === true).length;
+            const ulangCount = cardStatus.filter(s => s === false).length;
+            
+            const pahamEl = document.getElementById('paham-count');
+            const ulangEl = document.getElementById('ulang-count');
+            const progressBar = document.getElementById('flashcard-progress-bar');
+            
+            if (pahamEl) pahamEl.innerText = pahamCount;
+            if (ulangEl) ulangEl.innerText = ulangCount;
+            if (progressBar) {
+                const percent = Math.round(((pahamCount + ulangCount) / 50) * 100);
+                progressBar.style.width = `${percent}%`;
+            }
+        }
+
+        function flipCard() {
+            const inner = document.getElementById('flashcard-inner');
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextCard() {
+            if (currentFlashcardIndex < flashcards.length - 1) {
+                currentFlashcardIndex++;
+                updateFlashcardUI();
+            }
+        }
+
+        function prevCard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                updateFlashcardUI();
+            }
+        }
+
+        function markCard(known) {
+            cardStatus[currentFlashcardIndex] = known;
+            if (currentFlashcardIndex < flashcards.length - 1) {
+                currentFlashcardIndex++;
+            }
+            updateFlashcardUI();
+        }
+
+        function resetFlashcards() {
+            currentFlashcardIndex = 0;
+            cardStatus.fill(null);
+            updateFlashcardUI();
+        }
+
+        // Quiz Functions
+        function renderQuizQuestion() {
+            document.getElementById('quiz-box').classList.remove('hidden');
+            document.getElementById('quiz-completion-box').classList.add('hidden');
+
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-number').innerText = `Soal ${currentQuizIndex + 1} dari 50`;
+            document.getElementById('quiz-era-tag').innerText = q.era;
+            document.getElementById('quiz-question').innerText = q.q;
+            document.getElementById('quiz-score-display').innerText = `Skor: ${quizScore} / 50`;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = q.options.map((opt, idx) => `
+                <button onclick="selectQuizAnswer(${idx})" class="quiz-opt-btn w-full text-left p-4 rounded-xl text-sm font-medium border border-slate-200 bg-white hover:border-sky-300 transition flex items-center justify-between">
+                    <span>${opt}</span>
+                    <i class="far fa-circle text-slate-300"></i>
+                </button>
+            `).join('');
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+        }
+
+        function selectQuizAnswer(selectedIndex) {
+            const q = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+
+            btns.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) {
+                    btn.classList.add('bg-emerald-50', 'border-emerald-400', 'text-emerald-900');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('bg-rose-50', 'border-rose-400', 'text-rose-900');
+                }
+            });
+
+            if (selectedIndex === q.answer) {
+                if (userQuizAnswers[currentQuizIndex] === null) {
+                    quizScore++;
+                }
+                feedback.className = "p-4 rounded-xl text-sm leading-relaxed mb-6 bg-emerald-50 text-emerald-800 border border-emerald-200";
+                feedback.innerHTML = `<strong>Jawaban Benar!</strong> <br>${q.explanation}`;
+            } else {
+                feedback.className = "p-4 rounded-xl text-sm leading-relaxed mb-6 bg-rose-50 text-rose-800 border border-rose-200";
+                feedback.innerHTML = `<strong>Jawaban Kurang Tepat.</strong> <br>${q.explanation}`;
+            }
+
+            userQuizAnswers[currentQuizIndex] = selectedIndex;
+            document.getElementById('quiz-score-display').innerText = `Skor: ${quizScore} / 50`;
+            feedback.classList.remove('hidden');
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (currentQuizIndex === quizData.length - 1) {
+                nextBtn.innerHTML = `Selesaikan Kuis & Lihat Hasil <i class="fas fa-check-double ml-1"></i>`;
+            } else {
+                nextBtn.innerHTML = `Soal Berikutnya <i class="fas fa-arrow-right ml-1"></i>`;
+            }
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                showQuizCompletionScreen();
+            }
+        }
+
+        function showQuizCompletionScreen() {
+            document.getElementById('quiz-box').classList.add('hidden');
+            document.getElementById('quiz-completion-box').classList.remove('hidden');
+
+            const percentage = Math.round((quizScore / 50) * 100);
+            document.getElementById('final-score-val').innerText = `${quizScore} / 50`;
+            document.getElementById('final-percentage-val').innerText = `Tingkat Penguasaan: ${percentage}%`;
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            userQuizAnswers.fill(null);
+            renderQuizQuestion();
+        }
+
+        // Certificate Drawing Logic
+        function generateCertificateCanvas(userName) {
+            const canvas = document.getElementById('certificate-canvas');
+            canvas.width = 1200;
+            canvas.height = 850;
+            const ctx = canvas.getContext('2d');
+
+            // White Background
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Outer Elegant Border
+            ctx.strokeStyle = "#0284c7";
+            ctx.lineWidth = 14;
+            ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+            // Gold/Slate Accent Inner Border
+            ctx.strokeStyle = "#cbd5e1";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(48, 48, canvas.width - 96, canvas.height - 96);
+
+            // Corner Decorative Motifs
+            ctx.fillStyle = "#0284c7";
+            ctx.fillRect(40, 40, 30, 30);
+            ctx.fillRect(canvas.width - 70, 40, 30, 30);
+            ctx.fillRect(40, canvas.height - 70, 30, 30);
+            ctx.fillRect(canvas.width - 70, canvas.height - 70, 30, 30);
+
+            // Header - Platform Name
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "bold 32px 'Plus Jakarta Sans', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("PSIKOHISTORI", canvas.width / 2, 130);
+
+            ctx.fillStyle = "#0284c7";
+            ctx.font = "600 15px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("PSIKOLOGI UMS", canvas.width / 2, 158);
+
+            // Divider Line
+            ctx.beginPath();
+            ctx.moveTo(380, 180);
+            ctx.lineTo(820, 180);
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Main Certificate Title
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "800 42px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("SERTIFIKAT KELULUSAN", canvas.width / 2, 245);
+
+            ctx.fillStyle = "#64748b";
+            ctx.font = "400 18px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("Sertifikat ini secara resmi diberikan kepada:", canvas.width / 2, 288);
+
+            // Recipient Name
+            const displayName = userName.trim() !== "" ? userName.trim() : "Peserta PsikoHistori Pro";
+            ctx.fillStyle = "#0369a1";
+            ctx.font = "bold 42px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText(displayName.toUpperCase(), canvas.width / 2, 360);
+
+            // Underline for Name
+            const nameWidth = ctx.measureText(displayName.toUpperCase()).width;
+            ctx.beginPath();
+            ctx.moveTo((canvas.width / 2) - Math.max(nameWidth / 2, 150) - 20, 380);
+            ctx.lineTo((canvas.width / 2) + Math.max(nameWidth / 2, 150) + 20, 380);
+            ctx.strokeStyle = "#0284c7";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Description text
+            const percentage = Math.round((quizScore / 50) * 100);
+            ctx.fillStyle = "#334155";
+            ctx.font = "400 19px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("Atas keberhasilan menyelesaikan Kuis", canvas.width / 2, 435);
+            ctx.fillText(`Sejarah Aliran & Paradigma Ilmu Psikologi dengan Skor: ${quizScore} / 50 (${percentage}%)`, canvas.width / 2, 468);
+
+            // Verification ID & Date
+            const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            ctx.fillStyle = "#64748b";
+            ctx.font = "15px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText(`Diterbitkan: ${today}  |  ID Verifikasi: PH-${Math.floor(100000 + Math.random() * 900000)}`, canvas.width / 2, 525);
+
+            // Seal / Gold Badge Ribbon
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, 620, 48, 0, Math.PI * 2);
+            ctx.fillStyle = "#d97706";
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#fef3c7";
+            ctx.stroke();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 18px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("VERIFIED", canvas.width / 2, 620);
+            ctx.font = "bold 13px 'Plus Jakarta Sans', sans-serif";
+            ctx.fillText("PASSED", canvas.width / 2, 638);
+        }
+
+        function openCertificateModal() {
+            const userName = document.getElementById('cert-user-name').value;
+            generateCertificateCanvas(userName);
+            document.getElementById('cert-modal-backdrop').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('cert-modal-backdrop').classList.add('hidden');
+        }
+
+        function downloadCertificatePNG() {
+            const canvas = document.getElementById('certificate-canvas');
+            const userName = document.getElementById('cert-user-name').value.trim() || 'Peserta';
+            const fileName = `Sertifikat_PsikoHistori_${userName.replace(/\s+/g, '_')}.png`;
+
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Lab Functions
+        function renderLabCases() {
+            const list = document.getElementById('case-selector-list');
+            list.innerHTML = caseStudies.map((c, idx) => `
+                <button onclick="selectCase(${idx})" class="case-btn w-full text-left p-3.5 rounded-xl text-sm font-semibold border border-slate-200 bg-white hover:border-sky-300 transition">
+                    ${c.title}
+                </button>
+            `).join('');
+
+            selectCase(0);
+        }
+
+        function selectCase(index) {
+            const c = caseStudies[index];
+            const display = document.getElementById('case-display');
+
+            document.querySelectorAll('.case-btn').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('bg-sky-50', 'border-sky-400', 'text-sky-900');
+                } else {
+                    btn.classList.remove('bg-sky-50', 'border-sky-400', 'text-sky-900');
+                }
+            });
+
+            display.innerHTML = `
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 pb-3">
+                        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Skenario Lab</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">${c.title}</h2>
+                        <p class="text-sm text-slate-600 mt-2 bg-slate-50 p-3 rounded-xl border border-slate-100">${c.desc}</p>
+                    </div>
+
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider pt-2">Analisis Perspektif Multiparadigma</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${c.analysis.behaviorism ? `
+                        <div class="p-4 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                            <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1"><i class="fas fa-dog mr-1"></i> Behaviorisme</h4>
+                            <p class="text-xs text-emerald-900 leading-relaxed">${c.analysis.behaviorism}</p>
+                        </div>` : ''}
+                        
+                        ${c.analysis.psychoanalysis ? `
+                        <div class="p-4 bg-purple-50/50 rounded-xl border border-purple-100">
+                            <h4 class="text-xs font-bold text-purple-800 uppercase tracking-wider mb-1"><i class="fas fa-couch mr-1"></i> Psikoanalisis</h4>
+                            <p class="text-xs text-purple-900 leading-relaxed">${c.analysis.psychoanalysis}</p>
+                        </div>` : ''}
+                        
+                        ${c.analysis.cognitive ? `
+                        <div class="p-4 bg-sky-50/50 rounded-xl border border-sky-100">
+                            <h4 class="text-xs font-bold text-sky-800 uppercase tracking-wider mb-1"><i class="fas fa-microchip mr-1"></i> Kognitif Perilaku (CBT)</h4>
+                            <p class="text-xs text-sky-900 leading-relaxed">${c.analysis.cognitive}</p>
+                        </div>` : ''}
+                        
+                        ${c.analysis.biological ? `
+                        <div class="p-4 bg-amber-50/50 rounded-xl border border-amber-100">
+                            <h4 class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1"><i class="fas fa-dna mr-1"></i> Neurosains & Biologis</h4>
+                            <p class="text-xs text-amber-900 leading-relaxed">${c.analysis.biological}</p>
+                        </div>` : ''}
+
+                        ${c.analysis.humanistic ? `
+                        <div class="p-4 bg-rose-50/50 rounded-xl border border-rose-100">
+                            <h4 class="text-xs font-bold text-rose-800 uppercase tracking-wider mb-1"><i class="fas fa-user-heart mr-1"></i> Humanistik</h4>
+                            <p class="text-xs text-rose-900 leading-relaxed">${c.analysis.humanistic}</p>
+                        </div>` : ''}
+
+                        ${c.analysis.socio_cultural ? `
+                        <div class="p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
+                            <h4 class="text-xs font-bold text-indigo-800 uppercase tracking-wider mb-1"><i class="fas fa-users mr-1"></i> Sosio-Kultural Modern</h4>
+                            <p class="text-xs text-indigo-900 leading-relaxed">${c.analysis.socio_cultural}</p>
+                        </div>` : ''}
+
+                        ${c.analysis.evolutionary ? `
+                        <div class="p-4 bg-teal-50/50 rounded-xl border border-teal-100">
+                            <h4 class="text-xs font-bold text-teal-800 uppercase tracking-wider mb-1"><i class="fas fa-tree mr-1"></i> Psikologi Evolusioner</h4>
+                            <p class="text-xs text-teal-900 leading-relaxed">${c.analysis.evolutionary}</p>
+                        </div>` : ''}
+
+                        ${c.analysis.positive ? `
+                        <div class="p-4 bg-yellow-50/50 rounded-xl border border-yellow-200">
+                            <h4 class="text-xs font-bold text-yellow-800 uppercase tracking-wider mb-1"><i class="fas fa-sun mr-1"></i> Psikologi Positif</h4>
+                            <p class="text-xs text-yellow-900 leading-relaxed">${c.analysis.positive}</p>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
